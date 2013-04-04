@@ -1,0 +1,6 @@
+# net.oneandone.maven.plugins:bill-of-materials-maven-plugin:2.0 user=mifr
+d70e4ec32cf9ee8124ceec983147efc361153180  bill-of-materials-maven-plugin-2.0-javadoc.jar
+8067be47fffc2648048fee3baed8a071f1979db4  bill-of-materials-maven-plugin-2.0-sources.jar
+afdcebb5c05657e458b6481fefb64198b956a4c1  bill-of-materials-maven-plugin-2.0-test-sources.jar
+c052b4f07f308b17160d574d87b9ff89190d7869  bill-of-materials-maven-plugin-2.0.jar
+31c814fa18447aaff4f38f43b0097c00fd811e9b  bill-of-materials-maven-plugin-2.0.pom
