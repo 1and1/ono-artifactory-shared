@@ -13,11 +13,13 @@
     <packaging>jar</packaging>
 
     <name>1&amp;1 :: Shared Artifactory</name>
-    <url>http://1and1.github.com/${project.artifactId}/</url>
+    <description>Shared classes used to interact with Artifactory's REST-API.</description>
+    
+    <url>http://1and1.github.com/ono-artifactory-shared/</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <scmpublish.content>target/staging/${project.artifactId}</scmpublish.content>
+        <scmpublish.content>target/staging/ono-artifactory-shared</scmpublish.content>
     </properties>
     <scm>
         <connection>scm:git:git://github.com/1and1/ono-artifactory-shared.git</connection>
