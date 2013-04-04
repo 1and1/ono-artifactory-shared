@@ -15,20 +15,18 @@
  */
 package net.oneandone.shared.artifactory;
 
-import net.oneandone.shared.artifactory.NotFoundException;
-import net.oneandone.shared.artifactory.DownloadByChecksum;
-import net.oneandone.shared.artifactory.ArtifactoryModule;
-import net.oneandone.shared.artifactory.SearchByChecksum;
-import net.oneandone.shared.artifactory.FetchStorageByChecksum;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import net.oneandone.shared.artifactory.model.ArtifactoryStorage;
 import net.oneandone.shared.artifactory.model.Sha1;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import static org.junit.Assert.*;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.internal.AssumptionViolatedException;
 
 /**
  *
@@ -44,6 +42,16 @@ public class FetchFromArtifactoryIT {
     final DownloadByChecksum sutDownloadByChecksum = injector.getInstance(DownloadByChecksum.class);
     final FetchStorageByChecksum sutFetchStorageByChecksum = injector.getInstance(FetchStorageByChecksum.class);
     final Sha1 sha1OfBomJavaDoc = Sha1.valueOf("d70e4ec32cf9ee8124ceec983147efc361153180");
+    
+    @BeforeClass
+    public static void checkWhetherArtifactoryIsAvailable() throws MalformedURLException {
+        final URL url = new URL(ARTIFACTORY_MODULE.getArtifactoryUrl());
+        try {
+            url.openStream().close();
+        } catch (IOException ex) {
+            throw new AssumptionViolatedException("Could not reach " + url);
+        }
+    }
     
     @Test
     public void searchByChecksum() throws IOException, NotFoundException {        
@@ -75,7 +83,7 @@ public class FetchFromArtifactoryIT {
     }
 
     @Test(expected=NotFoundException.class)
-    public void searchByChecksumNotFound() throws IOException, NotFoundException {        
+    public void searchByChecksumNotFound() throws IOException, NotFoundException {
         sutSearchByChecksum.search(
                 "libs-release-local",
                 Sha1.valueOf("d70e4ec32cf9ee8124ceec983147efc361153180"));
