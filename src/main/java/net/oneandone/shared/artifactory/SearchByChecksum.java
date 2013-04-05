@@ -47,21 +47,18 @@ public class SearchByChecksum {
         final HttpGet shaGet = new HttpGet(build);
         final ArtifactoryChecksumResults checksumResults = client.execute(shaGet, new JsonResponseHandler<ArtifactoryChecksumResults>(ArtifactoryChecksumResults.class));
         if (checksumResults.results.isEmpty()) {
-            throw new NotFoundException("Could not find results using repositoryName=" + repositoryName + ", sha1=" + sha1 + " at " + baseUri);
+            throw new NotFoundException(build);
         }
         return checksumResults.results.get(0).uri;
     }
 
     URI buildSearchURI(final String repositoryName, final Sha1 sha1) throws IllegalArgumentException {
-        final URI searchUri;
         try {
-            searchUri = new URIBuilder(baseUri.resolve("api/search/checksum"))
+            return new URIBuilder(baseUri.resolve("api/search/checksum"))
                     .addParameter("repos", repositoryName)
                     .addParameter("sha1", sha1.toString()).build();
-        }
-        catch (URISyntaxException ex) {
-            throw new IllegalArgumentException("Could not build URI using repositoryName=" + repositoryName + ", sha1=" + sha1, ex);
-        }
-        return searchUri;
-    }    
+        } catch (URISyntaxException ex) { // not easily coverable as baseUri is already valid and addParameter is safe.
+            throw new IllegalArgumentException("Could not build URI from " + baseUri + " using repositoryName=" + repositoryName + ", sha1=" + sha1, ex);
+        }        
+    }
 }
