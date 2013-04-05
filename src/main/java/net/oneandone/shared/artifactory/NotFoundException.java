@@ -15,6 +15,9 @@
  */
 package net.oneandone.shared.artifactory;
 
+import java.net.URI;
+import java.util.Locale;
+
 /**
  * Thrown when a search returns <b>no result</b>.
  * 
@@ -23,19 +26,12 @@ package net.oneandone.shared.artifactory;
 public class NotFoundException extends Exception {
 
     /**
-     * Creates a new instance of
-     * <code>NotFoundException</code> without detail message.
-     */
-    public NotFoundException() {
-    }
-
-    /**
      * Constructs an instance of
      * <code>NotFoundException</code> with the specified detail message.
      *
-     * @param msg the detail message.
+     * @param uri the detail message.
      */
-    public NotFoundException(String msg) {
-        super(msg);
+    public NotFoundException(URI uri) {
+        super(String.format(Locale.ENGLISH, "No results found at: %s", uri));
     }
 }
