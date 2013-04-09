@@ -14,8 +14,8 @@
 
     <name>1&amp;1 :: Shared Artifactory</name>
     <description>Shared classes used to interact with Artifactory's REST-API.</description>
-    
-    <url>http://1and1.github.com/ono-artifactory-shared/</url>
+
+    <url>http://1and1.github.io/ono-artifactory-shared/</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -76,7 +76,7 @@
             <artifactId>commons-cli</artifactId>
             <version>1.2</version>
         </dependency>
-        
+
         <!-- test dependencies -->
         <dependency>
             <groupId>junit</groupId>
@@ -97,7 +97,7 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
         </dependency>
-        
+
         <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
