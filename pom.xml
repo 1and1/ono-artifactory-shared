@@ -122,7 +122,7 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <configuration>
                         <excludes>
-                            <exclude>net.oneandone.shared.artifactory.App</exclude>
+                            <exclude>net/oneandone/shared/artifactory/App.class</exclude>
                         </excludes>
                     </configuration>
                 </plugin>
