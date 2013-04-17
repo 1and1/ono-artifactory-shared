@@ -44,13 +44,14 @@ public class ArtifactoryModule extends AbstractModule {
     }
 
     ArtifactoryModule() {
-        this(System.getenv("ARTIFACTORY_INSTANCE"));        
+        this(System.getenv("ARTIFACTORY_INSTANCE"));
     }
 
     @Override
     protected void configure() {
         bind(SearchByChecksum.class).annotatedWith(Names.named("searchByChecksum")).to(SearchByChecksum.class);
         bind(FetchStorageByChecksum.class).annotatedWith(Names.named("fetchStorageByChecksum")).to(FetchStorageByChecksum.class);
+        bind(SearchLatestVersion.class).annotatedWith(Names.named("searchLatestVersion")).to(SearchLatestVersion.class);
     }
 
     @Provides
