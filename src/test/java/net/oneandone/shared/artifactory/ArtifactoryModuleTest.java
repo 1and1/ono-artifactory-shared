@@ -18,7 +18,6 @@ package net.oneandone.shared.artifactory;
 
 import com.google.inject.Guice;
 import java.net.URI;
-import org.apache.http.client.HttpClient;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
