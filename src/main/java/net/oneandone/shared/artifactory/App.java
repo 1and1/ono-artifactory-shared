@@ -30,10 +30,8 @@ import org.apache.commons.cli.ParseException;
  */
 public class App {
 
-    private final static URI DEFAULT_ARTIFACTORY_URI = URI.create("http://mam-mvn-bs01.portal.united.domain:8081/artifactory/");
+    private final static URI DEFAULT_ARTIFACTORY_URI = URI.create("http://localhost:8081/artifactory/");
 
-    private final URI artifactoryUri;
-    
     public static void main(String[] args) throws ParseException {
         final Options options = new Options()
                 .addOption("l", "uri", true, "Base-URI in the form of " + DEFAULT_ARTIFACTORY_URI)
@@ -55,7 +53,6 @@ public class App {
     public App(URI artifactoryUri) {
         Injector injector = Guice.createInjector(new ArtifactoryModule(artifactoryUri.toString()));
         injector.getInstance(SearchByChecksum.class);
-        this.artifactoryUri = artifactoryUri;
     }
 
     public App() {

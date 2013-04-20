@@ -1,0 +1,96 @@
+{
+  "results": [
+    {
+      "metadataUri": "http://localhost:8081/artifactory/api/storage/repo1-cache/junit/junit/4.11/junit-4.11.pom?mdns",
+      "repo": "repo1-cache",
+      "path": "/junit/junit/4.11/junit-4.11.pom",
+      "created": "2012-11-15T22:09:15.740+01:00",
+      "createdBy": "anonymous",
+      "lastModified": "2012-11-14T20:21:47.000+01:00",
+      "modifiedBy": "anonymous",
+      "lastUpdated": "2012-11-15T22:09:15.828+01:00",
+      "downloadUri": "http://localhost:8081/artifactory/repo1-cache/junit/junit/4.11/junit-4.11.pom",
+      "remoteUrl": "http://repo1.maven.org/maven2//junit/junit/4.11/junit-4.11.pom",
+      "mimeType": "application/x-maven-pom+xml",
+      "size": "2344",
+      "checksums": {
+        "sha1": "cddf7490ffe839978cf5d6c944c01f2a8cb70a49",
+        "md5": "6edf646ee0934638fba22cffd6f89f92"
+      },
+      "originalChecksums": {
+        "sha1": "cddf7490ffe839978cf5d6c944c01f2a8cb70a49",
+        "md5": "6edf646ee0934638fba22cffd6f89f92"
+      },
+      "uri": "http://localhost:8081/artifactory/api/storage/repo1-cache/junit/junit/4.11/junit-4.11.pom"
+    },
+    {
+      "metadataUri": "http://localhost:8081/artifactory/api/storage/repo1-cache/junit/junit/4.11/junit-4.11-sources.jar?mdns",
+      "repo": "repo1-cache",
+      "path": "/junit/junit/4.11/junit-4.11-sources.jar",
+      "created": "2012-12-13T22:07:44.004+01:00",
+      "createdBy": "anonymous",
+      "lastModified": "2012-11-14T20:21:32.000+01:00",
+      "modifiedBy": "anonymous",
+      "lastUpdated": "2012-12-13T22:07:44.075+01:00",
+      "downloadUri": "http://localhost:8081/artifactory/repo1-cache/junit/junit/4.11/junit-4.11-sources.jar",
+      "remoteUrl": "http://repo1.maven.org/maven2//junit/junit/4.11/junit-4.11-sources.jar",
+      "mimeType": "application/java-archive",
+      "size": "151329",
+      "checksums": {
+        "sha1": "28e0ad201304e4a4abf999ca0570b7cffc352c3c",
+        "md5": "f4f7ee2921617f94f88ee9f188aef576"
+      },
+      "originalChecksums": {
+        "sha1": "28e0ad201304e4a4abf999ca0570b7cffc352c3c",
+        "md5": "f4f7ee2921617f94f88ee9f188aef576"
+      },
+      "uri": "http://localhost:8081/artifactory/api/storage/repo1-cache/junit/junit/4.11/junit-4.11-sources.jar"
+    },
+    {
+      "metadataUri": "http://localhost:8081/artifactory/api/storage/repo1-cache/junit/junit/4.11/junit-4.11.jar?mdns",
+      "repo": "repo1-cache",
+      "path": "/junit/junit/4.11/junit-4.11.jar",
+      "created": "2012-11-15T22:09:16.240+01:00",
+      "createdBy": "anonymous",
+      "lastModified": "2012-11-14T20:21:20.000+01:00",
+      "modifiedBy": "anonymous",
+      "lastUpdated": "2012-11-15T22:09:16.455+01:00",
+      "downloadUri": "http://localhost:8081/artifactory/repo1-cache/junit/junit/4.11/junit-4.11.jar",
+      "remoteUrl": "http://repo1.maven.org/maven2//junit/junit/4.11/junit-4.11.jar",
+      "mimeType": "application/java-archive",
+      "size": "245039",
+      "checksums": {
+        "sha1": "4e031bb61df09069aeb2bffb4019e7a5034a4ee0",
+        "md5": "3c42be5ea7cbf3635716abbb429cb90d"
+      },
+      "originalChecksums": {
+        "sha1": "4e031bb61df09069aeb2bffb4019e7a5034a4ee0",
+        "md5": "3c42be5ea7cbf3635716abbb429cb90d"
+      },
+      "uri": "http://localhost:8081/artifactory/api/storage/repo1-cache/junit/junit/4.11/junit-4.11.jar"
+    },
+    {
+      "metadataUri": "http://localhost:8081/artifactory/api/storage/repo1-cache/junit/junit/4.11/junit-4.11-javadoc.jar?mdns",
+      "repo": "repo1-cache",
+      "path": "/junit/junit/4.11/junit-4.11-javadoc.jar",
+      "created": "2012-12-13T22:07:46.153+01:00",
+      "createdBy": "anonymous",
+      "lastModified": "2012-11-14T20:21:45.000+01:00",
+      "modifiedBy": "anonymous",
+      "lastUpdated": "2012-12-13T22:07:46.360+01:00",
+      "downloadUri": "http://localhost:8081/artifactory/repo1-cache/junit/junit/4.11/junit-4.11-javadoc.jar",
+      "remoteUrl": "http://repo1.maven.org/maven2//junit/junit/4.11/junit-4.11-javadoc.jar",
+      "mimeType": "application/java-archive",
+      "size": "379344",
+      "checksums": {
+        "sha1": "f3289e8097c0013b711d058b563064c3bded4423",
+        "md5": "9f13de9cf8ce1a9c5259a27c6e0882b6"
+      },
+      "originalChecksums": {
+        "sha1": "f3289e8097c0013b711d058b563064c3bded4423",
+        "md5": "9f13de9cf8ce1a9c5259a27c6e0882b6"
+      },
+      "uri": "http://localhost:8081/artifactory/api/storage/repo1-cache/junit/junit/4.11/junit-4.11-javadoc.jar"
+    }
+  ]
+}
