@@ -43,7 +43,7 @@ public class SearchLatestVersionIT {
     @Test
     public void testGet() throws IOException {
         assumeThat("ARTIFACTORY_INSTANCE not set, skipping.", System.getenv("ARTIFACTORY_INSTANCE"), notNullValue());
-        String expResult = "1.1.1";
+        String expResult = "1.1.2";
         String result = searchLatestVersion.get("repo1", "commons-logging", "commons-logging");
         assertEquals(expResult, result);
     }
