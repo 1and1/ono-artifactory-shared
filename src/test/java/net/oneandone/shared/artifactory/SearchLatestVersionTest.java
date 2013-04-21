@@ -32,16 +32,16 @@ import org.mockito.Mockito;
 public class SearchLatestVersionTest {
     
     /**
-     * Test of get method, of class SearchLatestVersion.
+     * Test of search method, of class SearchLatestVersion.
      */
     @Test
-    public void testGet() throws IOException {
+    public void testSearch() throws IOException {
         //http://mamrepo.united.domain/artifactory/api/search/latestVersion?g=commons-logging&a=commons-logging&repos=repo1
         HttpClient mockClient = Mockito.mock(HttpClient.class);
         Mockito.when(mockClient.execute(Mockito.any(HttpUriRequest.class), Mockito.any(BasicResponseHandler.class))).thenReturn("1.1.1");
         SearchLatestVersion instance = new SearchLatestVersion(mockClient, URI.create("http://localhost:8081/artifactory/"));
         String expResult = "1.1.1";
-        String result = instance.get("repo1", "commons-logging", "commons-logging");
+        String result = instance.search("repo1", "commons-logging", "commons-logging");
         assertEquals(expResult, result);
     }
 

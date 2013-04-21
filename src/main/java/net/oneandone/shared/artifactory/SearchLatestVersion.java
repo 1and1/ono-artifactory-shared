@@ -42,9 +42,9 @@ public class SearchLatestVersion {
         this.client = client;
     }
 
-    public String get(String repositoryId, String groupId, String artifactId) throws IOException {
-        final URI build = buildSearchUri(repositoryId, groupId, artifactId);
-        HttpGet get = new HttpGet(build);
+    public String search(String repositoryName, String groupId, String artifactId) throws IOException {
+        final URI build = buildSearchUri(repositoryName, groupId, artifactId);
+        final HttpGet get = new HttpGet(build);
         return client.execute(get, new BasicResponseHandler());
     }
 

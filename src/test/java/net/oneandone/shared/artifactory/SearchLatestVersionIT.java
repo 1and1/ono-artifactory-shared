@@ -38,13 +38,13 @@ public class SearchLatestVersionIT {
     }
 
    /**
-     * Test of get method, of class SearchLatestVersion.
+     * Test of search method, of class SearchLatestVersion.
      */
     @Test
     public void testGet() throws IOException {
         assumeThat("ARTIFACTORY_INSTANCE not set, skipping.", System.getenv("ARTIFACTORY_INSTANCE"), notNullValue());
         String expResult = "1.1.2";
-        String result = searchLatestVersion.get("repo1", "commons-logging", "commons-logging");
+        String result = searchLatestVersion.search("repo1", "commons-logging", "commons-logging");
         assertEquals(expResult, result);
     }
 }
