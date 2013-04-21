@@ -15,8 +15,6 @@
  */
 package net.oneandone.shared.artifactory;
 
-import net.oneandone.shared.artifactory.NotFoundException;
-import net.oneandone.shared.artifactory.SearchByChecksum;
 import net.oneandone.shared.artifactory.model.ArtifactoryChecksumResult;
 import net.oneandone.shared.artifactory.model.ArtifactoryChecksumResults;
 import net.oneandone.shared.artifactory.model.Sha1;
