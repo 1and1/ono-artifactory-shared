@@ -59,7 +59,7 @@ public class SearchByGav {
     }
 
     URI buildSearchURI(String repositoryName, Gav gav) {
-        final URIBuilder uriBuilder = new URIBuilder(baseUri.resolve("api/search/gav"))
+        final URIBuilder uriBuilder = new URIBuilder(baseUri.resolve("api/search/gavc"))
                 .addParameter("repos", repositoryName)
                 .addParameter("g", gav.getGroupId())
                 .addParameter("a", gav.getArtifactId())

@@ -50,6 +50,7 @@ public class ArtifactoryModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(SearchByChecksum.class).annotatedWith(Names.named("searchByChecksum")).to(SearchByChecksum.class);
+        bind(SearchByGav.class).annotatedWith(Names.named("searchByGav")).to(SearchByGav.class);
         bind(FetchStorageByChecksum.class).annotatedWith(Names.named("fetchStorageByChecksum")).to(FetchStorageByChecksum.class);
         bind(SearchLatestVersion.class).annotatedWith(Names.named("searchLatestVersion")).to(SearchLatestVersion.class);
     }

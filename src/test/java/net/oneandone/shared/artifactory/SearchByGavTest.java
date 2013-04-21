@@ -56,7 +56,7 @@ public class SearchByGavTest {
      */
     @Test
     public void testBuildSearchURI() {
-        URI expResult = URI.create("http://localhost/api/search/gav?repos=repo1&g=junit&a=junit&v=4.11");
+        URI expResult = URI.create("http://localhost/api/search/gavc?repos=repo1&g=junit&a=junit&v=4.11");
         URI result = sut.buildSearchURI(repositoryName, gav);
         assertEquals(expResult, result);
     }
