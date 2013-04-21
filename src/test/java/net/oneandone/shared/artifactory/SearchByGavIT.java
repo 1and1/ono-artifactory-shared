@@ -44,6 +44,6 @@ public class SearchByGavIT {
     @Test
     public void testSearch() throws Exception {
         List<ArtifactoryStorage> result = sut.search(repositoryName, gav);
-        assertEquals(4, result.size());
+        assertTrue("Have at leat 4 resources", result.size() >= 4);
     }
 }
