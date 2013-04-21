@@ -15,7 +15,7 @@ public class Gav {
     private final String artifactId;
     private final String version;
     
-    Gav(String groupId, String artifactId, String version) {
+    public Gav(String groupId, String artifactId, String version) {
         this.groupId = groupId;
         this.artifactId = artifactId;
         this.version = version;        

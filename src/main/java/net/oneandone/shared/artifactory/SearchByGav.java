@@ -20,9 +20,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 import net.oneandone.shared.artifactory.model.ArtifactoryChecksumResults;
+import net.oneandone.shared.artifactory.model.ArtifactoryResults;
+import net.oneandone.shared.artifactory.model.ArtifactoryStorage;
 import net.oneandone.shared.artifactory.model.Sha1;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -42,14 +45,17 @@ public class SearchByGav {
         this.client = client;
         this.baseUri = baseUri;
     }
-    public URL search(final String repositoryName, final Gav gav) throws IOException, NotFoundException {
+
+    public List<ArtifactoryStorage> search(final String repositoryName, final Gav gav) throws IOException, NotFoundException {
         final URI build = buildSearchURI(repositoryName, gav);
-        final HttpGet shaGet = new HttpGet(build);
-        final ArtifactoryChecksumResults checksumResults = client.execute(shaGet, new JsonResponseHandler<ArtifactoryChecksumResults>(ArtifactoryChecksumResults.class));
-        if (checksumResults.results.isEmpty()) {
+        final HttpGet get = new HttpGet(build);
+        get.addHeader("X-Result-Detail", "info");
+        final ArtifactoryResults results = client.execute(get, 
+                new JsonResponseHandler<ArtifactoryResults>(ArtifactoryResults.class));
+        if (results.results.isEmpty()) {
             throw new NotFoundException(build);
         }
-        return checksumResults.results.get(0).uri;
+        return results.results;
     }
 
     URI buildSearchURI(String repositoryName, Gav gav) {
