@@ -53,17 +53,13 @@ public class SearchByGav {
     }
 
     URI buildSearchURI(String repositoryName, Gav gav) {
-        try {
-            return new URIBuilder(baseUri.resolve("api/search/gav"))
-                    .addParameter("repos", repositoryName)
-                    .addParameter("g", gav.getGroupId())
-                    .addParameter("a", gav.getArtifactId())
-                    .addParameter("v", gav.getVersion())
-                    .build();
-        } catch (URISyntaxException ex) { // not easily coverable as baseUri is already valid and addParameter is safe.
-            throw new IllegalArgumentException(
-                    "Could not build URI from " + baseUri + " using repositoryName=" + repositoryName + ", gav=" + gav, ex);
-        }
+        final URIBuilder uriBuilder = new URIBuilder(baseUri.resolve("api/search/gav"))
+                .addParameter("repos", repositoryName)
+                .addParameter("g", gav.getGroupId())
+                .addParameter("a", gav.getArtifactId())
+                .addParameter("v", gav.getVersion());
+        return Utils.toUri(uriBuilder,
+                "Could not build URI from " + baseUri + " using repositoryName=" + repositoryName + ", gav=" + gav);
     }
 
 }

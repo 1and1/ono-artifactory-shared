@@ -53,12 +53,11 @@ public class SearchByChecksum {
     }
 
     URI buildSearchURI(final String repositoryName, final Sha1 sha1) throws IllegalArgumentException {
-        try {
-            return new URIBuilder(baseUri.resolve("api/search/checksum"))
-                    .addParameter("repos", repositoryName)
-                    .addParameter("sha1", sha1.toString()).build();
-        } catch (URISyntaxException ex) { // not easily coverable as baseUri is already valid and addParameter is safe.
-            throw new IllegalArgumentException("Could not build URI from " + baseUri + " using repositoryName=" + repositoryName + ", sha1=" + sha1, ex);
-        }        
+        final URIBuilder uriBuilder = new URIBuilder(baseUri.resolve("api/search/checksum"))
+                .addParameter("repos", repositoryName)
+                .addParameter("sha1", sha1.toString());
+        return Utils.toUri(
+                uriBuilder,
+                "Could not build URI from " + baseUri + " using repositoryName=" + repositoryName + ", sha1=" + sha1);
     }
 }

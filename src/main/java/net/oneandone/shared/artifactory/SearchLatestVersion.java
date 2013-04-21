@@ -41,21 +41,20 @@ public class SearchLatestVersion {
         this.baseUri = baseUri;
         this.client = client;
     }
-    
+
     public String get(String repositoryId, String groupId, String artifactId) throws IOException {
-        final URI build = createSearchUri(repositoryId, groupId, artifactId);
+        final URI build = buildSearchUri(repositoryId, groupId, artifactId);
         HttpGet get = new HttpGet(build);
         return client.execute(get, new BasicResponseHandler());
     }
 
-    URI createSearchUri(String repositoryId, String groupId, String artifactId) {
-        try {
-            return new URIBuilder(baseUri.resolve("api/search/latestVersion"))
-                    .addParameter("repos", repositoryId)
-                    .addParameter("g", groupId)
-                    .addParameter("a", artifactId).build();
-        } catch (URISyntaxException ex) {
-            throw new RuntimeException(ex);
-        }
+    URI buildSearchUri(String repositoryId, String groupId, String artifactId) {
+        final URIBuilder uriBuilder = new URIBuilder(baseUri.resolve("api/search/latestVersion"))
+                .addParameter("repos", repositoryId)
+                .addParameter("g", groupId)
+                .addParameter("a", artifactId);
+        return Utils.toUri(
+                uriBuilder,
+                "Could not build uri for " + repositoryId + " with g=" + groupId + ", a=" + artifactId);
     }
 }

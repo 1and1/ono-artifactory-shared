@@ -46,13 +46,13 @@ public class SearchLatestVersionTest {
     }
 
     /**
-     * Test of createSearchUri method, of class SearchLatestVersion.
+     * Test of buildSearchUri method, of class SearchLatestVersion.
      */
     @Test
-    public void testCreateSearchUri() {
+    public void testBuildSearchUri() {
         SearchLatestVersion sut = new SearchLatestVersion(null, URI.create("http://localhost:8081/artifactory/"));
         URI expResult = URI.create("http://localhost:8081/artifactory/api/search/latestVersion?repos=repo1&g=commons-logging&a=commons-logging");
-        URI result = sut.createSearchUri("repo1", "commons-logging", "commons-logging");
+        URI result = sut.buildSearchUri("repo1", "commons-logging", "commons-logging");
         assertEquals(expResult, result);
     }
     
