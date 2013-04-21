@@ -11,5 +11,5 @@ import java.util.List;
  * @author Mirko Friedenhagen
  */
 public class ArtifactoryResults {
-    List<ArtifactoryStorage> results;
+    public List<ArtifactoryStorage> results;
 }
