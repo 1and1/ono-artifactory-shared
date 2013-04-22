@@ -29,21 +29,21 @@ import static org.junit.Assume.assumeThat;
  */
 public class SearchLatestVersionIT {
 
-    final SearchLatestVersion searchLatestVersion;
+    final SearchLatestVersion sut;
 
     public SearchLatestVersionIT() {
+        assumeThat("ARTIFACTORY_INSTANCE not set, skipping.", System.getenv("ARTIFACTORY_INSTANCE"), notNullValue());        
         Injector injector = Guice.createInjector(new ArtifactoryModule());
-        searchLatestVersion = injector.getInstance(SearchLatestVersion.class);
+        sut = injector.getInstance(SearchLatestVersion.class);        
     }
 
    /**
      * Test of search method, of class SearchLatestVersion.
      */
     @Test
-    public void testGet() throws IOException {
-        assumeThat("ARTIFACTORY_INSTANCE not set, skipping.", System.getenv("ARTIFACTORY_INSTANCE"), notNullValue());
+    public void testGet() throws IOException {        
         String expResult = "1.1.2";
-        String result = searchLatestVersion.search("repo1", "commons-logging", "commons-logging");
+        String result = sut.search("repo1", "commons-logging", "commons-logging");
         assertEquals(expResult, result);
     }
 }
