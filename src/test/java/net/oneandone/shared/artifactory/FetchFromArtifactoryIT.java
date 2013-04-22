@@ -20,13 +20,10 @@ import com.google.inject.Injector;
 import net.oneandone.shared.artifactory.model.ArtifactoryStorage;
 import net.oneandone.shared.artifactory.model.Sha1;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.internal.AssumptionViolatedException;
 
 /**
  *
@@ -34,31 +31,21 @@ import org.junit.internal.AssumptionViolatedException;
  */
 public class FetchFromArtifactoryIT {
 
-    static final ArtifactoryModule ARTIFACTORY_MODULE = new ArtifactoryModule();
+    final ArtifactoryModule artifactoryModule = new ArtifactoryTestModule();
     public static final int BOM_JAVADOC_SIZE = 45966;
     
-    final Injector injector = Guice.createInjector(ARTIFACTORY_MODULE);
+    final Injector injector = Guice.createInjector(artifactoryModule);
     final SearchByChecksum sutSearchByChecksum = injector.getInstance(SearchByChecksum.class);
     final DownloadByChecksum sutDownloadByChecksum = injector.getInstance(DownloadByChecksum.class);
     final FetchStorageByChecksum sutFetchStorageByChecksum = injector.getInstance(FetchStorageByChecksum.class);
     final Sha1 sha1OfBomJavaDoc = Sha1.valueOf("d70e4ec32cf9ee8124ceec983147efc361153180");
-    
-    @BeforeClass
-    public static void checkWhetherArtifactoryIsAvailable() throws MalformedURLException {
-        final URL url = new URL(ARTIFACTORY_MODULE.getArtifactoryUrl());
-        try {
-            url.openStream().close();
-        } catch (IOException ex) {
-            throw new AssumptionViolatedException("Could not reach " + url);
-        }
-    }
-    
+
     @Test
     public void searchByChecksum() throws IOException, NotFoundException {        
         final URL checksumURL = sutSearchByChecksum.search(
                 "repo1-cache",
                 sha1OfBomJavaDoc);
-        assertEquals(ARTIFACTORY_MODULE.getArtifactoryUrl() + "api/storage/repo1-cache/net/oneandone/maven/plugins/bill-of-materials-maven-plugin/2.0/bill-of-materials-maven-plugin-2.0-javadoc.jar",
+        assertEquals(artifactoryModule.getArtifactoryUrl() + "api/storage/repo1-cache/net/oneandone/maven/plugins/bill-of-materials-maven-plugin/2.0/bill-of-materials-maven-plugin-2.0-javadoc.jar",
                 checksumURL.toString());
     }
     
@@ -69,7 +56,7 @@ public class FetchFromArtifactoryIT {
                 sha1OfBomJavaDoc);
         assertEquals(sha1OfBomJavaDoc, storage.checksums.sha1);
         assertEquals(BOM_JAVADOC_SIZE, storage.size);
-        assertEquals(ARTIFACTORY_MODULE.getArtifactoryUrl() + "repo1-cache/net/oneandone/maven/plugins/bill-of-materials-maven-plugin/2.0/bill-of-materials-maven-plugin-2.0-javadoc.jar",
+        assertEquals(artifactoryModule.getArtifactoryUrl() + "repo1-cache/net/oneandone/maven/plugins/bill-of-materials-maven-plugin/2.0/bill-of-materials-maven-plugin-2.0-javadoc.jar",
                 storage.downloadUri.toString());
     }
 

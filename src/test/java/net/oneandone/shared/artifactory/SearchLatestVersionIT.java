@@ -18,10 +18,8 @@ package net.oneandone.shared.artifactory;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import java.io.IOException;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assume.assumeThat;
 
 /**
  *
@@ -31,9 +29,8 @@ public class SearchLatestVersionIT {
 
     final SearchLatestVersion sut;
 
-    public SearchLatestVersionIT() {
-        assumeThat("ARTIFACTORY_INSTANCE not set, skipping.", System.getenv("ARTIFACTORY_INSTANCE"), notNullValue());        
-        Injector injector = Guice.createInjector(new ArtifactoryModule());
+    public SearchLatestVersionIT() {        
+        Injector injector = Guice.createInjector(new ArtifactoryTestModule());
         sut = injector.getInstance(SearchLatestVersion.class);        
     }
 

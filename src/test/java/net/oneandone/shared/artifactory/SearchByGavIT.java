@@ -20,10 +20,8 @@ import com.google.inject.Injector;
 import java.util.List;
 import net.oneandone.shared.artifactory.model.ArtifactoryStorage;
 import net.oneandone.shared.artifactory.model.Gav;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.junit.Assume.assumeThat;
 
 /**
  *
@@ -36,8 +34,7 @@ public class SearchByGavIT {
     final Gav gav = new Gav("junit", "junit", "4.11");
 
     public SearchByGavIT() {
-        assumeThat("ARTIFACTORY_INSTANCE not set, skipping.", System.getenv("ARTIFACTORY_INSTANCE"), notNullValue());
-        Injector injector = Guice.createInjector(new ArtifactoryModule());
+        Injector injector = Guice.createInjector(new ArtifactoryTestModule());
         sut = injector.getInstance(SearchByGav.class);        
     }
 
