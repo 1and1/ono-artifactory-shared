@@ -24,9 +24,9 @@ import org.junit.internal.AssumptionViolatedException;
 /**
  * @author Mirko Friedenhagen
  */
-public class ArtifactoryTestModule extends ArtifactoryModule {
+public class ArtifactoryITModule extends ArtifactoryModule {
 
-    public ArtifactoryTestModule() {
+    public ArtifactoryITModule() {
         super();
         try {
             final URL url = new URL(getArtifactoryUrl());
@@ -38,5 +38,5 @@ public class ArtifactoryTestModule extends ArtifactoryModule {
         } catch (MalformedURLException ex) {
             throw new AssumptionViolatedException("Malformed URL", ex);
         }
-    }    
+    }
 }

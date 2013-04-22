@@ -29,16 +29,16 @@ public class SearchLatestVersionIT {
 
     final SearchLatestVersion sut;
 
-    public SearchLatestVersionIT() {        
-        Injector injector = Guice.createInjector(new ArtifactoryTestModule());
-        sut = injector.getInstance(SearchLatestVersion.class);        
+    public SearchLatestVersionIT() {
+        Injector injector = Guice.createInjector(new ArtifactoryITModule());
+        sut = injector.getInstance(SearchLatestVersion.class);
     }
 
    /**
      * Test of search method, of class SearchLatestVersion.
      */
     @Test
-    public void testGet() throws IOException {        
+    public void testGet() throws IOException {
         String expResult = "1.1.2";
         String result = sut.search("repo1", "commons-logging", "commons-logging");
         assertEquals(expResult, result);

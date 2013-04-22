@@ -34,8 +34,8 @@ public class SearchByGavIT {
     final Gav gav = new Gav("junit", "junit", "4.11");
 
     public SearchByGavIT() {
-        Injector injector = Guice.createInjector(new ArtifactoryTestModule());
-        sut = injector.getInstance(SearchByGav.class);        
+        Injector injector = Guice.createInjector(new ArtifactoryITModule());
+        sut = injector.getInstance(SearchByGav.class);
     }
 
     /**

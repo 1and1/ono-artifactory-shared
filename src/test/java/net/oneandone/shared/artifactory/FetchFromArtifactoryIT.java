@@ -31,9 +31,9 @@ import org.junit.Test;
  */
 public class FetchFromArtifactoryIT {
 
-    final ArtifactoryModule artifactoryModule = new ArtifactoryTestModule();
+    final ArtifactoryModule artifactoryModule = new ArtifactoryITModule();
     public static final int BOM_JAVADOC_SIZE = 45966;
-    
+
     final Injector injector = Guice.createInjector(artifactoryModule);
     final SearchByChecksum sutSearchByChecksum = injector.getInstance(SearchByChecksum.class);
     final DownloadByChecksum sutDownloadByChecksum = injector.getInstance(DownloadByChecksum.class);
