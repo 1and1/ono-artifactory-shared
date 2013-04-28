@@ -16,10 +16,12 @@
 package net.oneandone.shared.artifactory;
 
 
-import net.oneandone.shared.artifactory.DownloadResponseHandler;
+import java.io.ByteArrayInputStream;
 import net.oneandone.shared.artifactory.model.Sha1;
 import java.io.File;
+import java.io.IOException;
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
@@ -40,16 +42,18 @@ import static org.mockito.Mockito.when;
  * @author Mirko Friedenhagen <mirko.friedenhagen@1und1.de>
  */
 public class DownloadResponseHandlerTest {
-    
+
     private static final Sha1 SHA1_OF_BOM_TXT = Sha1.valueOf("996e6e154ac44bd0c981f10632385ffd2944826d");
 
     @Rule
     public final TemporaryFolder folder = new TemporaryFolder(new File("target"));
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
-    
+
     final HttpResponse mockedResponse = mock(HttpResponse.class);
-    
+
+    final HttpEntity mockEntity = mock(HttpEntity.class);
+
     final BasicStatusLine statusLine = new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "OK");
 
     DownloadResponseHandler sut;
@@ -60,18 +64,32 @@ public class DownloadResponseHandlerTest {
             SHA1_OF_BOM_TXT, folder.getRoot());
         when(mockedResponse.getStatusLine()).thenReturn(statusLine);
     }
-    
+
     /**
      * Test of handleResponse method, of class DownloadResponseHandler.
      */
-    @Ignore
     @Test
-    public void testHandleResponse() throws Exception {
-        System.out.println("handleResponse");
-        HttpResponse response = null;
+    public void testHandleResponseValidSha1() throws Exception {
+        setupHttpResponse("hallo");
         DownloadResponseHandler instance = new DownloadResponseHandler(
-                    Sha1.valueOf("b8f3661de93691420f65d799f490e53305af8c40"), folder.getRoot());
-        Void result = instance.handleResponse(response);
+                    Sha1.valueOf("fd4cef7a4e607f1fcc920ad6329a6df2df99a4e8"), folder.getRoot());
+        instance.handleResponse(mockedResponse);
+        final File outputFile = new File(folder.getRoot(), "foo.jar");
+        assertTrue(outputFile + " does not exist.", outputFile.exists());
+    }
+
+    /**
+     * Test of handleResponse method, of class DownloadResponseHandler.
+     */
+    @Test
+    public void testHandleResponseInvalidSha1() throws Exception {
+        setupHttpResponse("hallo1");
+        DownloadResponseHandler instance = new DownloadResponseHandler(
+                    Sha1.valueOf("fd4cef7a4e607f1fcc920ad6329a6df2df99a4e8"), folder.getRoot());
+        thrown.expect(IllegalStateException.class);
+        thrown.expectMessage("sha1 from file target");
+        thrown.expectMessage("does not equal expected sha1");
+        instance.handleResponse(mockedResponse);
     }
 
     /**
@@ -94,5 +112,12 @@ public class DownloadResponseHandlerTest {
         thrown.expect(NullPointerException.class);
         thrown.expectMessage("Expected Header '" + headerName + "' not found!");
         sut.checkHeaderNotNull(mockedResponse, headerName);
+    }
+
+    void setupHttpResponse(final String content) throws IllegalStateException, IOException {
+        when(mockedResponse.getFirstHeader("X-Checksum-Sha1")).thenReturn(new BasicHeader("X-Checksum-Sha1", "fd4cef7a4e607f1fcc920ad6329a6df2df99a4e8"));
+        when(mockedResponse.getFirstHeader("X-Artifactory-Filename")).thenReturn(new BasicHeader("X-Artifactory-Filename", "foo.jar"));
+        when(mockEntity.getContent()).thenReturn(new ByteArrayInputStream(content.getBytes()));
+        when(mockedResponse.getEntity()).thenReturn(mockEntity);
     }
 }
