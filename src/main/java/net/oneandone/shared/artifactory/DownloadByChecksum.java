@@ -50,22 +50,30 @@ public class DownloadByChecksum {
         if (!sha1.equals(storageSha1)) {
             throw new IllegalStateException("Given sha1=" + sha1 + " does not equal storageSha1=" + storageSha1);
         }
-        final BasicResponseHandler responseHandler = new BasicResponseHandler() {
-            @Override
-            public String handleResponse(HttpResponse response) throws HttpResponseException, IOException {
-                final String body = super.handleResponse(response);
-                final Sha1 sha1Header = Sha1.valueOf(response.getFirstHeader("X-Checksum-Sha1").getValue());
-                if (!sha1Header.equals(storageSha1)) {
-                    throw new IllegalStateException("Returned sha1Header=" + sha1Header + " does not equal storageSha1=" + storageSha1);
-                }
+        final BasicResponseHandler responseHandler = new BasicResponseHandlerImpl(storageSha1);
+        return client.execute(httpGet, responseHandler);
+    }
+
+    private static class BasicResponseHandlerImpl extends BasicResponseHandler {
+
+        private final Sha1 storageSha1;
+        public BasicResponseHandlerImpl(Sha1 storageSha1) {
+            this.storageSha1 = storageSha1;
+        }
+
+        @Override
+        public String handleResponse(HttpResponse response) throws HttpResponseException, IOException {
+            final String body = super.handleResponse(response);
+            final Sha1 sha1Header = Sha1.valueOf(response.getFirstHeader("X-Checksum-Sha1").getValue());
+            if (!sha1Header.equals(storageSha1)) {
+                throw new IllegalStateException("Returned sha1Header=" + sha1Header + " does not equal storageSha1=" + storageSha1);
+            }
 //TODO: body hash does not equal the given one, encoding??
 //                final HashCode bodySha1 = Hashing.sha1().hashString(body);
 //                if (!bodySha1.toString().equals(storageSha1)) {
 //                    throw new IllegalStateException("Returned bodySha1=" + bodySha1 + " does not equal storageSha1=" + storageSha1);
 //                }
-                return body;
-            }
-        };
-        return client.execute(httpGet, responseHandler);
+            return body;
+        }
     }
 }
