@@ -28,7 +28,6 @@ import net.oneandone.shared.artifactory.model.Sha1;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URI;
 import org.joda.time.DateTime;
 import static org.junit.Assert.*;
 import org.junit.Test;

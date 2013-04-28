@@ -17,11 +17,9 @@ package net.oneandone.shared.artifactory;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.BasicResponseHandler;

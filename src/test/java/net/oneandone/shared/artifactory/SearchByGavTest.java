@@ -17,19 +17,15 @@ package net.oneandone.shared.artifactory;
 
 import java.io.InputStreamReader;
 import java.net.URI;
-import java.net.URL;
 import java.util.List;
 import net.oneandone.shared.artifactory.model.ArtifactoryResults;
-import net.oneandone.shared.artifactory.model.ArtifactoryResultsTest;
 import net.oneandone.shared.artifactory.model.ArtifactoryStorage;
 import net.oneandone.shared.artifactory.model.Gav;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 import static org.mockito.Mockito.*;
 
 /**

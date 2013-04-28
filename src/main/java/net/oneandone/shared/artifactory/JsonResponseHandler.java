@@ -15,7 +15,6 @@
  */
 package net.oneandone.shared.artifactory;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
