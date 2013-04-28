@@ -19,7 +19,9 @@ import java.io.IOException;
 import java.net.URI;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -39,19 +41,46 @@ public class SearchLatestVersion {
         this.client = client;
     }
 
-    public String search(String repositoryName, String groupId, String artifactId) throws IOException {
-        final URI build = buildSearchUri(repositoryName, groupId, artifactId);
-        final HttpGet get = new HttpGet(build);
-        return client.execute(get, new BasicResponseHandler());
+    /**
+     * Searches for the latest version.
+     *
+     * @param repositoryName to search in.
+     * @param groupId of the artifact.
+     * @param artifactId of the artifact.
+     * @return the latest version of the artifact in repositoryName.
+     *
+     * @throws IOException during remote call.
+     */
+    public String search(String repositoryName, String groupId, String artifactId) throws NotFoundException {
+        final URI searchUri = buildSearchUri(repositoryName, groupId, artifactId);
+        final HttpGet get = new HttpGet(searchUri);
+        try {
+            return client.execute(get, new BasicResponseHandler());
+        } catch (HttpResponseException e) {
+            if (e.getStatusCode() == HttpStatus.SC_NOT_FOUND) {
+                throw new NotFoundException(searchUri);
+            } else {
+                throw new RuntimeException("searchUri=" + searchUri.toString(), e);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("searchUri=" + searchUri.toString(), e);
+        }
     }
 
-    URI buildSearchUri(String repositoryId, String groupId, String artifactId) {
+    /**
+     * Builds searchUri.
+     * @param repositoryName to search in.
+     * @param groupId of the artifact.
+     * @param artifactId of the artifact.
+     * @return searchUri.
+     */
+    URI buildSearchUri(String repositoryName, String groupId, String artifactId) {
         final URIBuilder uriBuilder = new URIBuilder(baseUri.resolve("api/search/latestVersion"))
-                .addParameter("repos", repositoryId)
+                .addParameter("repos", repositoryName)
                 .addParameter("g", groupId)
                 .addParameter("a", artifactId);
         return Utils.toUri(
                 uriBuilder,
-                "Could not build uri for " + repositoryId + " with g=" + groupId + ", a=" + artifactId);
+                "Could not build uri for " + repositoryName + " with g=" + groupId + ", a=" + artifactId);
     }
 }

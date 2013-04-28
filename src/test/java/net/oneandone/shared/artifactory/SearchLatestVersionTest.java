@@ -17,31 +17,76 @@ package net.oneandone.shared.artifactory;
 
 import java.io.IOException;
 import java.net.URI;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.BasicResponseHandler;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
-import org.mockito.Mockito;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import static org.mockito.Mockito.*;
 
 /**
  *
  * @author mifr
  */
 public class SearchLatestVersionTest {
-    
+
+    final HttpClient mockClient = mock(HttpClient.class);
+
+    final SearchLatestVersion sut = new SearchLatestVersion(mockClient, URI.create("http://localhost:8081/artifactory/"));
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
     /**
      * Test of search method, of class SearchLatestVersion.
      */
     @Test
-    public void testSearch() throws IOException {
-        //http://mamrepo.united.domain/artifactory/api/search/latestVersion?g=commons-logging&a=commons-logging&repos=repo1
-        HttpClient mockClient = Mockito.mock(HttpClient.class);
-        Mockito.when(mockClient.execute(Mockito.any(HttpUriRequest.class), Mockito.any(BasicResponseHandler.class))).thenReturn("1.1.1");
-        SearchLatestVersion instance = new SearchLatestVersion(mockClient, URI.create("http://localhost:8081/artifactory/"));
+    public void testSearch() throws NotFoundException, IOException {
+        setupValidSearch();
         String expResult = "1.1.1";
-        String result = instance.search("repo1", "commons-logging", "commons-logging");
+        String result = sut.search("repo1", "commons-logging", "commons-logging");
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of search method, of class SearchLatestVersion.
+     */
+    @Test
+    public void testSearchNotfound() throws NotFoundException, IOException {
+        final HttpResponseException notFound = new HttpResponseException(HttpStatus.SC_NOT_FOUND, "Not found");
+        setupSearchWithException(notFound);
+        thrown.expect(NotFoundException.class);
+        thrown.expectMessage("No results found");
+        sut.search("repo1", "commons-logging", "commons-logging");
+    }
+
+    /**
+     * Test of search method, of class SearchLatestVersion.
+     */
+    @Test
+    public void testSearchOtherHttpResponseException() throws NotFoundException, IOException {
+        final HttpResponseException badRequest = new HttpResponseException(HttpStatus.SC_BAD_REQUEST, "Bad Request");
+        setupSearchWithException(badRequest);
+        thrown.expect(RuntimeException.class);
+        thrown.expectCause(is(badRequest));
+        sut.search("repo1", "commons-logging", "commons-logging");
+    }
+
+    /**
+     * Test of search method, of class SearchLatestVersion.
+     */
+    @Test
+    public void testSearchIOException() throws NotFoundException, IOException {
+        final IOException ex = new IOException("foo");
+        setupSearchWithException(ex);
+        thrown.expect(RuntimeException.class);
+        thrown.expectCause(is(ex));
+        sut.search("repo1", "commons-logging", "commons-logging");
     }
 
     /**
@@ -49,11 +94,21 @@ public class SearchLatestVersionTest {
      */
     @Test
     public void testBuildSearchUri() {
-        SearchLatestVersion sut = new SearchLatestVersion(null, URI.create("http://localhost:8081/artifactory/"));
         URI expResult = URI.create("http://localhost:8081/artifactory/api/search/latestVersion?repos=repo1&g=commons-logging&a=commons-logging");
         URI result = sut.buildSearchUri("repo1", "commons-logging", "commons-logging");
         assertEquals(expResult, result);
     }
-    
-    
+
+    void setupValidSearch() throws IOException {
+        //http://mamrepo.united.domain/artifactory/api/search/latestVersion?g=commons-logging&a=commons-logging&repos=repo1
+        when(mockClient.execute(any(HttpUriRequest.class), any(BasicResponseHandler.class))).thenReturn("1.1.1");
+    }
+
+    void setupSearchWithException(final Exception thrownException) throws IOException {
+        when(mockClient.execute(
+                any(HttpUriRequest.class),
+                any(BasicResponseHandler.class))).thenThrow(thrownException);
+    }
+
+
 }

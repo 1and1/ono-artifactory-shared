@@ -17,9 +17,8 @@ package net.oneandone.shared.artifactory;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import java.io.IOException;
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 /**
  *
@@ -38,9 +37,16 @@ public class SearchLatestVersionIT {
      * Test of search method, of class SearchLatestVersion.
      */
     @Test
-    public void testGet() throws IOException {
+    public void testSearch() throws NotFoundException {
         String expResult = "1.1.2";
         String result = sut.search("repo1", "commons-logging", "commons-logging");
         assertEquals(expResult, result);
+    }
+   /**
+     * Test of search method, of class SearchLatestVersion.
+     */
+    @Test(expected = NotFoundException.class)
+    public void testSearchNotFound() throws NotFoundException {
+        sut.search("repo1", "commons-logging", "commons-logginggggggggggg");
     }
 }
