@@ -23,12 +23,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
+ * Calculates the {@link MD5} of the decorated {@link OutputStream}.
  *
  * @author Mirko Friedenhagen <mirko.friedenhagen@1und1.de>
  */
 class MD5FilterOutputStream extends FilterOutputStream {
     private final Hasher hasher = Hashing.md5().newHasher();
 
+    /**
+     * @param out to decorate.
+     */
     public MD5FilterOutputStream(OutputStream out) {
         super(out);
     }

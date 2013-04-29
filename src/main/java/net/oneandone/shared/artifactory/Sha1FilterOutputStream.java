@@ -23,12 +23,16 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
+ * Calculates the {@link Sha1} of the decorated {@link OutputStream}.
  *
  * @author Mirko Friedenhagen <mirko.friedenhagen@1und1.de>
  */
 class Sha1FilterOutputStream extends FilterOutputStream {
     private final Hasher hasher = Hashing.sha1().newHasher();
 
+    /**
+     * @param out to decorate.
+     */
     public Sha1FilterOutputStream(OutputStream out) {
         super(out);
     }
