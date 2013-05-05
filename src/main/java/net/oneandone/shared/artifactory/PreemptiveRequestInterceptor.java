@@ -14,6 +14,8 @@ import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HttpContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * {@link HttpRequestInterceptor} which adds preemptively basic auth credentials depending on the host.
@@ -21,7 +23,12 @@ import org.apache.http.protocol.HttpContext;
  * @author Mirko Friedenhagen
  */
 public class PreemptiveRequestInterceptor implements HttpRequestInterceptor {
+
+    private static final Logger LOG = LoggerFactory.getLogger(PreemptiveRequestInterceptor.class);
+
+    /** AUTHORIZATION_HEADER */
     static final String AUTHORIZATION_HEADER = "Authorization";
+
 
     /** Holds the credentials for hosts. */
     private final HashMap<String, UsernamePasswordCredentials> credentialsMap =
@@ -41,10 +48,15 @@ public class PreemptiveRequestInterceptor implements HttpRequestInterceptor {
     @Override
     public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
         final HttpHost httpHost = (HttpHost) context.getAttribute(ExecutionContext.HTTP_TARGET_HOST);
-        final UsernamePasswordCredentials credentials = credentialsMap.get(httpHost.toHostString());
+        final String httpHostString = httpHost.toHostString();
+        final UsernamePasswordCredentials credentials = credentialsMap.get(httpHostString);
         if (credentials != null) {
-            final String auth = credentials.getUserName() + ":" + credentials.getPassword();
+            final String userName = credentials.getUserName();
+            final String auth = userName + ":" + credentials.getPassword();
+            LOG.debug("Adding authorization for host {}, userName={}", httpHostString, userName);
             request.addHeader(AUTHORIZATION_HEADER, "Basic " + BaseEncoding.base64().encode(auth.getBytes()));
+        } else {
+            LOG.debug("No authorization for host {}", httpHostString);
         }
     }
 
