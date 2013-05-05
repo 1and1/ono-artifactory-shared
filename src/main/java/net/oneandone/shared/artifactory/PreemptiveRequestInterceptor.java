@@ -15,6 +15,7 @@
  */
 package net.oneandone.shared.artifactory;
 
+import com.google.common.base.Charsets;
 import com.google.common.io.BaseEncoding;
 import java.io.IOException;
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class PreemptiveRequestInterceptor implements HttpRequestInterceptor {
             final String userName = credentials.getUserName();
             final String auth = userName + ":" + credentials.getPassword();
             LOG.debug("Adding authorization for host {}, userName={}", httpHostString, userName);
-            request.addHeader(AUTHORIZATION_HEADER, "Basic " + BaseEncoding.base64().encode(auth.getBytes()));
+            request.addHeader(AUTHORIZATION_HEADER, "Basic " + BaseEncoding.base64().encode(auth.getBytes(Charsets.UTF_8)));
         } else {
             LOG.debug("No authorization for host {}", httpHostString);
         }
