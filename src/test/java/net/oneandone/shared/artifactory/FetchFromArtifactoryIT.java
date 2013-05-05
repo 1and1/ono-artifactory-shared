@@ -73,6 +73,6 @@ public class FetchFromArtifactoryIT {
     public void searchByChecksumNotFound() throws IOException, NotFoundException {
         sutSearchByChecksum.search(
                 "libs-release-local",
-                Sha1.valueOf("d70e4ec32cf9ee8124ceec983147efc361153180"));
+                Sha1.valueOf("d70e4ec32cf9ee8124ceec983147e00000000000"));
     }
 }
