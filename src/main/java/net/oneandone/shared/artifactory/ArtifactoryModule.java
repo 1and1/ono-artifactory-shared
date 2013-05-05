@@ -38,6 +38,8 @@ public class ArtifactoryModule extends AbstractModule {
 
     private final String artifactoryUrl;
 
+    private final PreemptiveRequestInterceptor preemptiveRequestInterceptor = new PreemptiveRequestInterceptor();
+    
     public ArtifactoryModule(String artifactoryUrl) {
         this.artifactoryUrl = artifactoryUrl != null ? artifactoryUrl : DEFAULT_ARTIFACTORY;
         LOG.debug("artifactoryUrl={}", this.artifactoryUrl);
@@ -61,9 +63,16 @@ public class ArtifactoryModule extends AbstractModule {
         final DefaultHttpClient client = new DefaultHttpClient();
         client.addRequestInterceptor(new RequestAcceptEncoding());
         client.addResponseInterceptor(new ResponseContentEncoding());
+        client.addRequestInterceptor(providePreemptiveRequestInterceptor());
         return client;
     }
 
+    @Provides
+    @Named(value = "preemptiveRequestInterceptor")
+    PreemptiveRequestInterceptor providePreemptiveRequestInterceptor() {
+        return preemptiveRequestInterceptor;
+    }
+    
     @Provides
     @Named(value = "baseUri")
     URI provideUri() {
