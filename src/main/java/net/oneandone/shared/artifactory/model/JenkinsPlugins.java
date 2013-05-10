@@ -19,13 +19,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ *
  * @author Mirko Friedenhagen
  */
 public class JenkinsPlugins {
-    
+
     private List<JenkinsPlugin> plugins;
-    
+
     public static class JenkinsPlugin {
         private String shortName;
         private String url;
@@ -52,14 +52,16 @@ public class JenkinsPlugins {
             return version;
         }
     }
-    
+
     public JenkinsPlugin getByShortNameAndUrl(String shortName, String url) {
         for (JenkinsPlugin jenkinsPlugin : plugins) {
-            if (shortName.equals(jenkinsPlugin.getShortName()) && url.equals(jenkinsPlugin.getUrl())) {
+            final String pluginShortName = jenkinsPlugin.getShortName();
+            final String pluginUrl = jenkinsPlugin.getUrl();
+            if (shortName.equals(pluginShortName) && url.equals(pluginUrl)) {
                 return jenkinsPlugin;
             }
         }
         throw new IllegalArgumentException("No Jenkins Plugin matches " + shortName + ", " + url);
     }
-    
+
 }

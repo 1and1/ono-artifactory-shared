@@ -45,7 +45,12 @@ public class JenkinsPluginsTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testGetExistingJenkinsPluginWhichDoesNotExist() {
-        jenkinsPlugins.getByShortNameAndUrl("mailerXXX", "http://wiki.jenkins-ci.org/display/JENKINS/Mailer").getVersion();
+    public void testGetExistingJenkinsPluginWhoseShortNameDoesNotMatch() {
+        jenkinsPlugins.getByShortNameAndUrl("mailerXXX", "http://wiki.jenkins-ci.org/display/JENKINS/Mailer");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetExistingJenkinsPluginWhoseUrlDoesNotMatch() {
+        jenkinsPlugins.getByShortNameAndUrl("mailer", "http://wiki.jenkins-ci.org/display/JENKINS/MailerXXX");
     }
 }
