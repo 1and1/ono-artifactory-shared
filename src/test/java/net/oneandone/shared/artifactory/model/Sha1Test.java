@@ -15,7 +15,6 @@
  */
 package net.oneandone.shared.artifactory.model;
 
-import net.oneandone.shared.artifactory.model.Sha1;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
@@ -64,6 +63,6 @@ public class Sha1Test {
     public void checkHash() {
         final String givenSha1String = "d70e4ec32cf9ee8124ceec983147efc361153180";
         final Sha1 sha1 = Sha1.valueOf(givenSha1String);
-        sha1.hashCode();
+        assertNotEquals(1, sha1.hashCode());
     }
 }

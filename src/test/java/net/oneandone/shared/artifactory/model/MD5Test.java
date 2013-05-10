@@ -15,7 +15,6 @@
  */
 package net.oneandone.shared.artifactory.model;
 
-import net.oneandone.shared.artifactory.model.MD5;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
@@ -64,6 +63,6 @@ public class MD5Test {
     public void checkHash() {
         final String givenMD5String = "85be001d8d4c7114a27d27ac4c31b9db";
         final MD5 md5 = MD5.valueOf(givenMD5String);
-        md5.hashCode();
+        assertNotEquals(1, md5.hashCode());
     }
 }

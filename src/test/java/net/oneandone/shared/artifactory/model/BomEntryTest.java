@@ -15,7 +15,8 @@
  */
 package net.oneandone.shared.artifactory.model;
 
-import net.oneandone.shared.artifactory.model.BomEntry;
+import java.io.InputStream;
+import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -42,5 +43,16 @@ public class BomEntryTest {
     @Test(expected = IllegalArgumentException.class)
     public void checkWrongFormatWithASingleSpace() {
         BomEntry.valueOf("8067be47fffc2648048fee3baed8a071f1979db4 bill-of-materials-maven-plugin-2.0-sources.jar");
+    }
+
+    /**
+     * Test of read method, of class BomEntry.
+     */
+    @Test
+    public void checkRead() throws Exception {
+        System.out.println("read");
+        InputStream in = BomEntryTest.class.getResourceAsStream("/bill-of-materials.txt");
+        List result = BomEntry.read(in);
+        assertEquals(5, result.size());
     }
 }
