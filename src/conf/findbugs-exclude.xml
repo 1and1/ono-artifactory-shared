@@ -1,6 +1,6 @@
 <FindBugsFilter>
     <Match><!-- populated via deserialization. -->
         <Class name="~net\.oneandone\.shared\.artifactory\.model\..*" />
-        <Bug pattern="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD,UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD,UWF_UNWRITTEN_FIELD" />
+        <Bug pattern="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD,UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD,UWF_UNWRITTEN_FIELD,NP_UNWRITTEN_FIELD" />
     </Match>
 </FindBugsFilter>

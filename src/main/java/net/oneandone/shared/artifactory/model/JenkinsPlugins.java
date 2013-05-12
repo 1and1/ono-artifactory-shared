@@ -16,6 +16,7 @@
 package net.oneandone.shared.artifactory.model;
 
 import java.util.List;
+import static com.google.common.base.Preconditions.checkState;
 
 /**
  *
@@ -73,6 +74,7 @@ public class JenkinsPlugins {
      * @return plugin instance.
      */
     public JenkinsPlugin getByShortNameAndUrl(String shortName, String url) {
+        checkState(plugins != null, "JenkinsPlugins seems not be properly initialized, did you deserialize a JSON file?");
         for (JenkinsPlugin jenkinsPlugin : plugins) {
             final String pluginShortName = jenkinsPlugin.getShortName();
             final String pluginUrl = jenkinsPlugin.getUrl();

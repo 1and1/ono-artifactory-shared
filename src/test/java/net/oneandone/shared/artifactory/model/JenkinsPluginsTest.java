@@ -40,17 +40,21 @@ public class JenkinsPluginsTest {
     }
 
     @Test
-    public void testGetExistingJenkinsPlugin() {
+    public void testGetByShortNameAndUrl() {
         assertEquals("1.4", jenkinsPlugins.getByShortNameAndUrl("mailer", "http://wiki.jenkins-ci.org/display/JENKINS/Mailer").getVersion());
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testGetExistingJenkinsPluginWhoseShortNameDoesNotMatch() {
+    public void testGetByShortNameAndUrlWhoseShortNameDoesNotMatch() {
         jenkinsPlugins.getByShortNameAndUrl("mailerXXX", "http://wiki.jenkins-ci.org/display/JENKINS/Mailer");
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testGetExistingJenkinsPluginWhoseUrlDoesNotMatch() {
+    public void testGetByShortNameAndUrlWhoseUrlDoesNotMatch() {
         jenkinsPlugins.getByShortNameAndUrl("mailer", "http://wiki.jenkins-ci.org/display/JENKINS/MailerXXX");
+    }
+    @Test(expected = IllegalStateException.class)
+    public void testGetByShortNameAndUrlWithUninitializedClassNotComingFromDeserialization() {
+        new JenkinsPlugins().getByShortNameAndUrl("mailer", "http://wiki.jenkins-ci.org/display/JENKINS/MailerXXX");
     }
 }
