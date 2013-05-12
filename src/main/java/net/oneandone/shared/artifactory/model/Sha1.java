@@ -21,13 +21,18 @@ import java.util.regex.Pattern;
 
 /**
  * <a href="http://en.wikipedia.org/wiki/SHA-1">SHA-1</a> Holder class.
- * 
+ *
  * @author Mirko Friedenhagen
  */
-public class Sha1 {
+public final class Sha1 {
 
-    private final static int LEN_OF_SHA1 = 40;
-    final static Pattern PATTERN = Pattern.compile("[a-fA-F0-9]{40}");
+    /** Length of SHA1 */
+    private static final int LEN_OF_SHA1 = 40;
+
+    /** SHA1 consists of hexadecimal A-F0-9 only. */
+    static final Pattern PATTERN = Pattern.compile("[a-fA-F0-9]{" + LEN_OF_SHA1 + "}");
+
+    /** String representation */
     private final String sha1;
 
     private Sha1(String sha1) {
@@ -36,9 +41,9 @@ public class Sha1 {
 
     /**
      * Returns an SHA1-instance from the hexadecimal representation.
-     * 
-     * @param sha1
-     * @return
+     *
+     * @param sha1 hexadecimal representation.
+     * @return SHA1 instance.
      */
     public static Sha1 valueOf(final String sha1) {
         checkNotNull(sha1, "Given sha1 must not be null.");
@@ -47,7 +52,7 @@ public class Sha1 {
         checkArgument(PATTERN.matcher(sha1).matches(), sha1 + " does not match " + PATTERN.toString());
         return new Sha1(sha1);
     }
-    
+
     /**
      * Returns the hexadecimal representation of the SHA1-instance.
      */

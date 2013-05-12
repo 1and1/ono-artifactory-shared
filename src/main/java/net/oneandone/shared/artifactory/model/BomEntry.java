@@ -28,12 +28,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
+ * Holder for a single line of a bill-of-materials.txt created by
+ * <a href="http://1and1.github.io/bill-of-materials-maven-plugin/">bill-of-materials-maven-plugin</a>.
  * @author Mirko Friedenhagen
  */
 public class BomEntry {
+
+    /** Line matcher for bill-of-materials.txt. */
     private static final Pattern PATTERN = Pattern.compile("(" + Sha1.PATTERN.toString() + ")  (" + ".*)");
+
+    /** Filename of the entry in bill-of-materials.txt */
     private final String fileName;
+
+    /** SHA1 of the entry in bill-of-materials.txt */
     private final Sha1 sha1;
 
     private BomEntry(final Sha1 sha1, final String fileName) {
@@ -41,6 +48,11 @@ public class BomEntry {
         this.sha1 = sha1;
     }
 
+    /**
+     * Parses a single line of an entry in bill-of-materials.txt
+     * @param line of an entry in bill-of-materials.txt.
+     * @return parsed line.
+     */
     public static BomEntry valueOf(final String line) {
         checkNotNull(line, "line must not be null!");
         final Matcher matcher = PATTERN.matcher(line);
@@ -50,10 +62,10 @@ public class BomEntry {
 
     /**
      * Reads all sha1 sum entries from the given input stream.
-     * 
-     * @param in to read from
-     * @return list of BomEntry
-     * @throws IOException
+     *
+     * @param in to read from.
+     * @return list of BomEntry.
+     * @throws IOException when reading from in does not succeed.
      */
     public static List<BomEntry> read(final InputStream in) throws IOException {
         final LineReader lineReader = new LineReader(new InputStreamReader(checkNotNull(in), Charsets.UTF_8));
@@ -80,5 +92,5 @@ public class BomEntry {
     public Sha1 getSha1() {
         return sha1;
     }
-    
+
 }

@@ -21,13 +21,18 @@ import java.util.regex.Pattern;
 
 /**
  * <a href="http://en.wikipedia.org/wiki/Md5">MD5</a> Holder class.
- * 
+ *
  * @author Mirko Friedenhagen
  */
-public class MD5 {
+public final class MD5 {
 
-    private final static int LEN_OF_MD5 = 32;
-    final static Pattern PATTERN = Pattern.compile("[a-fA-F0-9]{32}");
+    /** Length of SHA1 */
+    private static final int LEN_OF_MD5 = 32;
+
+    /** MD5 consists of hexadecimal A-F0-9 only. */
+    static final Pattern PATTERN = Pattern.compile("[a-fA-F0-9]{" + LEN_OF_MD5 + "}");
+
+    /** String representation */
     private final String md5;
 
     private MD5(String md5) {
@@ -36,9 +41,9 @@ public class MD5 {
 
     /**
      * Returns an MD5-instance from the hexadecimal representation.
-     * 
-     * @param md5
-     * @return
+     *
+     * @param md5 hexadecimal representation.
+     * @return MD5 instance.
      */
     public static MD5 valueOf(final String md5) {
         checkNotNull(md5, "Given md5 must not be null.");
@@ -47,7 +52,7 @@ public class MD5 {
         checkArgument(PATTERN.matcher(md5).matches(), md5 + " does not match " + PATTERN.toString());
         return new MD5(md5);
     }
-    
+
     /**
      * Returns the hexadecimal representation of the MD5-instance.
      */

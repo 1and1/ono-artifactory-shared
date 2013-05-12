@@ -16,7 +16,6 @@
 package net.oneandone.shared.artifactory.model;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -24,11 +23,24 @@ import java.util.Map;
  */
 public class JenkinsPlugins {
 
+    /** Holder for the plugins. */
     private List<JenkinsPlugin> plugins;
 
+    /**
+     * Model for a single plugin.
+     */
     public static class JenkinsPlugin {
+        /**
+         * Shortname of the plugin.
+         */
         private String shortName;
+        /**
+         * URL of the plugin.
+         */
         private String url;
+        /**
+         * Version of the plugin.
+         */
         private String version;
 
         /**
@@ -53,6 +65,13 @@ public class JenkinsPlugins {
         }
     }
 
+    /**
+     * Get the instance of a plugin identified by shortName and url.
+     *
+     * @param shortName of the plugin.
+     * @param url of the plugin.
+     * @return plugin instance.
+     */
     public JenkinsPlugin getByShortNameAndUrl(String shortName, String url) {
         for (JenkinsPlugin jenkinsPlugin : plugins) {
             final String pluginShortName = jenkinsPlugin.getShortName();
