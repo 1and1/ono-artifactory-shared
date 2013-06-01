@@ -17,12 +17,23 @@ package net.oneandone.shared.artifactory;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import javax.inject.Inject;
+import javax.inject.Named;
+import net.oneandone.shared.artifactory.model.ArtifactoryStorage;
+import net.oneandone.shared.artifactory.model.Gav;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Hello world!
@@ -30,32 +41,59 @@ import org.apache.commons.cli.ParseException;
  */
 public class App {
 
+    private final static Logger LOG = LoggerFactory.getLogger(App.class);
+    
     private final static URI DEFAULT_ARTIFACTORY_URI = URI.create("http://localhost:8081/artifactory/");
 
-    public static void main(String[] args) throws ParseException {
+    private final PreemptiveRequestInterceptor preemptiveRequestInterceptor;
+    
+    private static void initLogging() {
+        final InputStream resourceAsStream = App.class.getResourceAsStream("/logging.properties");
+        try {
+            try {
+                LogManager.getLogManager().readConfiguration(resourceAsStream);
+            } finally {
+                resourceAsStream.close();
+            }
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        } catch (SecurityException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static void main(String[] args) throws ParseException, IOException, NotFoundException {
+        initLogging();
+        LOG.info("CLI: {}", Arrays.toString(args));
         final Options options = new Options()
                 .addOption("l", "uri", true, "Base-URI in the form of " + DEFAULT_ARTIFACTORY_URI)
                 .addOption("u", "user", true, "Username")
-                .addOption("p", "password", true, "Password");
-        final CommandLine commandline;
-        try {
-            commandline = new BasicParser().parse(options, args);
-            System.out.println(commandline.getArgList());
-        } catch (Exception e) {
-            final HelpFormatter formatter = new HelpFormatter();
-            formatter.setWidth(90);
-            e.printStackTrace();
-            formatter.printHelp("artifactory-download: ", options);
+                .addOption("p", "password", true, "Password")
+                .addOption("d", "debug", false, "Turn on debugging");
+        final CommandLine commandline = new BasicParser().parse(options, args);
+        if (commandline.hasOption("d")) {
+            LOG.info("Setting debug");
+            java.util.logging.Logger.getLogger("net.oneandone.shared.artifactory").setLevel(Level.ALL);
         }
-
+        final List<String> argList = commandline.getArgList();
+        LOG.info("ARGS: {}", argList);
+        Injector injector = Guice.createInjector(new ArtifactoryModule());
+        App instance = injector.getInstance(App.class);
+        instance.preemptiveRequestInterceptor.addCredentialsForHost("web.de", "foo", "bar");
+        List<ArtifactoryStorage> search = instance.searchByGav.search("repo1-cache", Gav.valueOf(argList.get(0)));
+        LOG.info("Got {} search results", search.size());
     }
 
-    public App(URI artifactoryUri) {
-        Injector injector = Guice.createInjector(new ArtifactoryModule(artifactoryUri.toString()));
-        injector.getInstance(SearchByChecksum.class);
-    }
+    private final SearchByGav searchByGav;
 
-    public App() {
-        this(DEFAULT_ARTIFACTORY_URI);
+    @Inject
+    public App(
+            @Named("preemptiveRequestInterceptor") PreemptiveRequestInterceptor preemptiveRequestInterceptor,
+            @Named("searchByGav") SearchByGav searchByGav) {
+        this.preemptiveRequestInterceptor = preemptiveRequestInterceptor;
+        this.searchByGav = searchByGav;
+        
     }
+    
+    
 }
