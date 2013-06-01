@@ -12,7 +12,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>1&amp;1 :: Shared Artifactory</name>
+    <name>1-and-1 :: Shared Artifactory</name>
     <description>Shared classes used to interact with Artifactory's REST-API.</description>
 
     <url>http://1and1.github.io/ono-artifactory-shared/</url>
