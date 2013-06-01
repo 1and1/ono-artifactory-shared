@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
  * @author Mirko Friedenhagen
  */
 public class GavTest {
-    Gav sut = new Gav("commons-logging", "commons-logging", "1.1.1");
+    Gav sut = Gav.valueOf("commons-logging:commons-logging:1.1.1");
     
     /**
      * Test of getGroupId method, of class Gav.

@@ -58,5 +58,13 @@ public class Gav {
         return String.format(Locale.ENGLISH, "GAV(%s, %s, %s)", groupId, artifactId, version);
     }
     
+    public static Gav valueOf(String gav) {
+        String[] split = gav.split(":");
+        if (split.length != 3) {
+            throw new IllegalArgumentException("Expected GROUP_ID:ARTIFACT_ID:VERSION, got " + gav);
+        } else {
+            return new Gav(split[0], split[1], split[2]);
+        }
+    }
     
 }
