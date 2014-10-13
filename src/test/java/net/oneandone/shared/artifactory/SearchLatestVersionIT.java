@@ -18,6 +18,8 @@ package net.oneandone.shared.artifactory;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -26,11 +28,14 @@ import org.junit.Test;
  */
 public class SearchLatestVersionIT {
 
-    final SearchLatestVersion sut;
 
-    public SearchLatestVersionIT() {
-        Injector injector = Guice.createInjector(new ArtifactoryITModule());
-        sut = injector.getInstance(SearchLatestVersion.class);
+    private final ArtifactoryITModule artifactoryITModule = new ArtifactoryITModule();
+    private final Injector injector = Guice.createInjector(artifactoryITModule);
+    private final SearchLatestVersion sut = injector.getInstance(SearchLatestVersion.class);
+
+    @Before
+    public void checkOSS() {
+        artifactoryITModule.needNonOSS();
     }
 
    /**

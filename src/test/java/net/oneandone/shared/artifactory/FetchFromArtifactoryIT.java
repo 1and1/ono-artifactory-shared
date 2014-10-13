@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import static org.junit.Assert.*;
+
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -31,7 +33,7 @@ import org.junit.Test;
  */
 public class FetchFromArtifactoryIT {
 
-    final ArtifactoryModule artifactoryModule = new ArtifactoryITModule();
+    final ArtifactoryITModule artifactoryModule = new ArtifactoryITModule();
     public static final int BOM_JAVADOC_SIZE = 45966;
 
     final Injector injector = Guice.createInjector(artifactoryModule);
@@ -40,30 +42,34 @@ public class FetchFromArtifactoryIT {
     final FetchStorageByChecksum sutFetchStorageByChecksum = injector.getInstance(FetchStorageByChecksum.class);
     final Sha1 sha1OfBomJavaDoc = Sha1.valueOf("d70e4ec32cf9ee8124ceec983147efc361153180");
 
+    @Before
+    public void checkOSS() {
+        artifactoryModule.needNonOSS();
+    }
     @Test
     public void searchByChecksum() throws IOException, NotFoundException {        
         final URL checksumURL = sutSearchByChecksum.search(
-                "repo1-cache",
+                "repo1",
                 sha1OfBomJavaDoc);
-        assertEquals(artifactoryModule.getArtifactoryUrl() + "api/storage/repo1-cache/net/oneandone/maven/plugins/bill-of-materials-maven-plugin/2.0/bill-of-materials-maven-plugin-2.0-javadoc.jar",
+        assertEquals(artifactoryModule.getArtifactoryUrl() + "api/storage/repo1/net/oneandone/maven/plugins/bill-of-materials-maven-plugin/2.0/bill-of-materials-maven-plugin-2.0-javadoc.jar",
                 checksumURL.toString());
     }
     
     @Test
     public void storageByChecksum() throws IOException, NotFoundException, URISyntaxException {
         final ArtifactoryStorage storage = sutFetchStorageByChecksum.fetch(
-                "repo1-cache",
+                "repo1",
                 sha1OfBomJavaDoc);
         assertEquals(sha1OfBomJavaDoc, storage.checksums.sha1);
         assertEquals(BOM_JAVADOC_SIZE, storage.size);
-        assertEquals(artifactoryModule.getArtifactoryUrl() + "repo1-cache/net/oneandone/maven/plugins/bill-of-materials-maven-plugin/2.0/bill-of-materials-maven-plugin-2.0-javadoc.jar",
+        assertEquals(artifactoryModule.getArtifactoryUrl() + "repo1/net/oneandone/maven/plugins/bill-of-materials-maven-plugin/2.0/bill-of-materials-maven-plugin-2.0-javadoc.jar",
                 storage.downloadUri.toString());
     }
 
     @Test
     public void downloadByChecksum() throws IOException, NotFoundException, URISyntaxException {
         String download = sutDownloadByChecksum.download(
-                "repo1-cache",
+                "repo1",
                 sha1OfBomJavaDoc);
         assertEquals(BOM_JAVADOC_SIZE, download.length());
 

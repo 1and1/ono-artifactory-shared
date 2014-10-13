@@ -16,8 +16,15 @@
 package net.oneandone.shared.artifactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+
+import net.oneandone.shared.artifactory.model.Version;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.internal.AssumptionViolatedException;
 
 /**
@@ -25,17 +32,30 @@ import org.junit.internal.AssumptionViolatedException;
  */
 public class ArtifactoryITModule extends ArtifactoryModule {
 
+    private final Version version;
+
     public ArtifactoryITModule() {
         super();
         try {
-            final URL url = new URL(getArtifactoryUrl());
+            final URL url = new URL(getArtifactoryUrl() + "api/system/version");
+            final JsonResponseHandler<Version> versionJsonResponseHandler = new JsonResponseHandler<>(Version.class);
             try {
-                url.openStream().close();
+                final HttpClient client = provideHttpClient();
+                final HttpGet get = new HttpGet(url.toURI());
+                version = client.execute(get, versionJsonResponseHandler);
             } catch (IOException ex) {
                 throw new AssumptionViolatedException("Could not reach " + url);
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
             }
         } catch (MalformedURLException ex) {
             throw new AssumptionViolatedException("Malformed URL", ex);
+        }
+    }
+
+    public void needNonOSS() {
+        if (version.license.equals("Artifactory OSS")) {
+            throw new AssumptionViolatedException("Does not run with Artifactory OSS.");
         }
     }
 }
