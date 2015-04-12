@@ -43,7 +43,7 @@ public class SearchLatestVersionIT {
      */
     @Test
     public void testSearch() throws NotFoundException {
-        String expResult = "1.1.3";
+        String expResult = "1.2";
         String result = sut.search("repo1", "commons-logging", "commons-logging");
         assertEquals(expResult, result);
     }
