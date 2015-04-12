@@ -30,7 +30,7 @@ import org.apache.http.client.ClientProtocolException;
 
 /**
  *
- * @author Mirko Friedenhagen <mirko.friedenhagen@1und1.de>
+ * @author Mirko Friedenhagen &lt;mirko.friedenhagen@1und1.de&gt;
  */
 public class DownloadResponseHandler extends StatusCodeCodeLessThanScMultipleChoicesResponseHandler<Void> {
 

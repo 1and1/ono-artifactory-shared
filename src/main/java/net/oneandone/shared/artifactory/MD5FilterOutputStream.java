@@ -25,7 +25,7 @@ import java.io.OutputStream;
 /**
  * Calculates the {@link MD5} of the decorated {@link OutputStream}.
  *
- * @author Mirko Friedenhagen <mirko.friedenhagen@1und1.de>
+ * @author Mirko Friedenhagen &lt;mirko.friedenhagen@1und1.de&gt;
  */
 class MD5FilterOutputStream extends FilterOutputStream {
     private final Hasher hasher = Hashing.md5().newHasher();

@@ -49,7 +49,7 @@ public class SearchLatestVersion {
      * @param artifactId of the artifact.
      * @return the latest version of the artifact in repositoryName.
      *
-     * @throws IOException during remote call.
+     * @throws NotFoundException when no artifact was found.
      */
     public String search(String repositoryName, String groupId, String artifactId) throws NotFoundException {
         final URI searchUri = buildSearchUri(repositoryName, groupId, artifactId);
