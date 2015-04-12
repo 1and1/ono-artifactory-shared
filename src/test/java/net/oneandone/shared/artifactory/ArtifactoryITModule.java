@@ -25,7 +25,7 @@ import net.oneandone.shared.artifactory.model.Version;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.junit.internal.AssumptionViolatedException;
+import org.junit.AssumptionViolatedException;
 
 /**
  * @author Mirko Friedenhagen
