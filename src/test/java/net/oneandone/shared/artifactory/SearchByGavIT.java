@@ -17,11 +17,13 @@ package net.oneandone.shared.artifactory;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import java.util.List;
 import net.oneandone.shared.artifactory.model.ArtifactoryStorage;
 import net.oneandone.shared.artifactory.model.Gav;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.util.List;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  *

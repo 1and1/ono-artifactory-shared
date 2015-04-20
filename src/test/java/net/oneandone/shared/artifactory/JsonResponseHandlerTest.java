@@ -15,7 +15,6 @@
  */
 package net.oneandone.shared.artifactory;
 
-import net.oneandone.shared.artifactory.JsonResponseHandler;
 import net.oneandone.shared.artifactory.model.ArtifactoryChecksumResult;
 import net.oneandone.shared.artifactory.model.ArtifactoryChecksumResults;
 import org.apache.http.HttpEntity;
@@ -24,11 +23,11 @@ import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.message.BasicStatusLine;
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 /**
  *
  * @author Mirko Friedenhagen
@@ -60,8 +59,7 @@ public class JsonResponseHandlerTest {
         when(mockedResponse.getEntity()).thenReturn(mockedEntity);
         final ArtifactoryChecksumResults checksumResults = sut.handleResponse(mockedResponse);
         final ArtifactoryChecksumResult checksumResult = checksumResults.results.get(0);
-        assertEquals(
-                "http://localhost:8081/artifactory/api/storage/plugins-snapshot-local/net/oneandone/maven/plugins/bill-of-materials-maven-plugin/2.1-SNAPSHOT/bill-of-materials-maven-plugin-2.1-SNAPSHOT-javadoc.jar", 
-                checksumResult.uri.toString());
+        assertThat(checksumResult.uri.toString()).isEqualTo(
+            "http://localhost:8081/artifactory/api/storage/plugins-snapshot-local/net/oneandone/maven/plugins/bill-of-materials-maven-plugin/2.1-SNAPSHOT/bill-of-materials-maven-plugin-2.1-SNAPSHOT-javadoc.jar" );
     }
 }

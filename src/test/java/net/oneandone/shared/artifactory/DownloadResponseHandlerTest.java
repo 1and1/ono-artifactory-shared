@@ -16,10 +16,7 @@
 package net.oneandone.shared.artifactory;
 
 
-import java.io.ByteArrayInputStream;
 import net.oneandone.shared.artifactory.model.Sha1;
-import java.io.File;
-import java.io.IOException;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,11 +25,16 @@ import org.apache.http.HttpVersion;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicStatusLine;
 import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -74,7 +76,7 @@ public class DownloadResponseHandlerTest {
                     Sha1.valueOf("fd4cef7a4e607f1fcc920ad6329a6df2df99a4e8"), folder.getRoot());
         instance.handleResponse(mockedResponse);
         final File outputFile = new File(folder.getRoot(), "foo.jar");
-        assertTrue(outputFile + " does not exist.", outputFile.exists());
+        assertThat(outputFile.exists()).as(outputFile + " does not exist.").isTrue();
     }
 
     /**
@@ -99,7 +101,7 @@ public class DownloadResponseHandlerTest {
         final String headerName = "DOES_NOT_MATTER";
         when(mockedResponse.getFirstHeader(headerName)).thenReturn(new BasicHeader(headerName, "foo"));
         final Header result = sut.checkHeaderNotNull(mockedResponse, headerName);
-        assertEquals("foo", result.getValue());
+        assertThat(result.getValue()).isEqualTo("foo");
     }
     /**
      * Test of checkHeaderNotNull method, of class DownloadResponseHandler.

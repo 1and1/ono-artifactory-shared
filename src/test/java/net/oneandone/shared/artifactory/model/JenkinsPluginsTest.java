@@ -18,11 +18,13 @@ package net.oneandone.shared.artifactory.model;
 import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import org.junit.After;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Mirko Friedenhagen
@@ -41,7 +43,8 @@ public class JenkinsPluginsTest {
 
     @Test
     public void testGetByShortNameAndUrl() {
-        assertEquals("1.4", jenkinsPlugins.getByShortNameAndUrl("mailer", "http://wiki.jenkins-ci.org/display/JENKINS/Mailer").getVersion());
+        assertThat(
+            jenkinsPlugins.getByShortNameAndUrl("mailer", "http://wiki.jenkins-ci.org/display/JENKINS/Mailer").getVersion()).isEqualTo("1.4");
     }
 
     @Test(expected = IllegalArgumentException.class)

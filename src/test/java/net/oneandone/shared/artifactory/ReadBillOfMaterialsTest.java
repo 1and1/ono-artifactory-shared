@@ -16,12 +16,14 @@
 package net.oneandone.shared.artifactory;
 
 import net.oneandone.shared.artifactory.model.BomEntry;
+import org.junit.After;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import org.junit.After;
-import static org.junit.Assert.*;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -38,7 +40,7 @@ public class ReadBillOfMaterialsTest {
     @Test
     public void read() throws IOException {
         List<BomEntry> bomEntries = BomEntry.read(bomStream);
-        assertEquals(5, bomEntries.size());
+        assertThat(bomEntries).hasSize(5);
     }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

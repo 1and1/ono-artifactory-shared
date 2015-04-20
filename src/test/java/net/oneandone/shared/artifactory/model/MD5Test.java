@@ -15,9 +15,10 @@
  */
 package net.oneandone.shared.artifactory.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  *
@@ -44,7 +45,7 @@ public class MD5Test {
     public void checkMd5() {
         final String givenMD5String = "85be001d8d4c7114a27d27ac4c31b9db";
         final MD5 md5 = MD5.valueOf(givenMD5String);
-        assertEquals(givenMD5String, String.valueOf(md5));
+        assertThat(String.valueOf(md5)).isEqualTo(givenMD5String);
     }
 
     @Test
@@ -53,7 +54,7 @@ public class MD5Test {
         final MD5 md5a = MD5.valueOf(givenMD5String);
         final MD5 md5b = MD5.valueOf(givenMD5String);
         final MD5 md5c = MD5.valueOf("85be001d8d4c7114a27d27ac4c31b9dc");
-        assertEquals(md5a, md5b);
+        assertThat(md5b).isEqualTo(md5a);
         assertNotEquals(md5a, md5c);
         assertNotEquals(md5a, "bar");
         assertNotEquals(md5a, null);

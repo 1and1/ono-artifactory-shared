@@ -15,14 +15,15 @@
  */
 package net.oneandone.shared.artifactory;
 
-import net.oneandone.shared.artifactory.MD5FilterOutputStream;
 import com.google.common.base.Charsets;
 import com.google.common.io.ByteStreams;
 import net.oneandone.shared.artifactory.model.MD5;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -47,7 +48,7 @@ public class MD5FilterOutputStreamTest {
         }
         final String outputString = out.toString("utf-8");
         final MD5 expectedMD5 = MD5.valueOf("833fb495d0afcba2f4d22bef1b7ffbea");
-        assertEquals(expectedMD5, sut.getMD5());
-        assertEquals(inputString + "A", outputString);
+        assertThat(sut.getMD5()).isEqualTo(expectedMD5);
+        assertThat(outputString).isEqualTo(inputString + "A");
     }
 }

@@ -16,9 +16,11 @@
 package net.oneandone.shared.artifactory;
 
 import com.google.inject.Guice;
-import java.net.URI;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.net.URI;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -42,7 +44,7 @@ public class ArtifactoryModuleTest {
     @Test
     public void testProvideHttpClient() {
         ArtifactoryModule sut = new ArtifactoryModule(DEFAULT_ARTIFACTORY);
-        assertNotNull(sut.provideHttpClient());
+        assertThat(sut.provideHttpClient()).isNotNull();
     }
 
     /**
@@ -53,7 +55,7 @@ public class ArtifactoryModuleTest {
         ArtifactoryModule sut = new ArtifactoryModule(DEFAULT_ARTIFACTORY);
         URI expResult = URI.create(DEFAULT_ARTIFACTORY);
         URI result = sut.provideUri();
-        assertEquals(expResult, result);
+        assertThat(result).isEqualTo(expResult);
     }
 
     /**
@@ -63,7 +65,7 @@ public class ArtifactoryModuleTest {
     public void testGetArtifactoryUrl() {
         ArtifactoryModule sut = new ArtifactoryModule(DEFAULT_ARTIFACTORY);
         String result = sut.getArtifactoryUrl();
-        assertEquals(DEFAULT_ARTIFACTORY, result);
+        assertThat(result).isEqualTo(DEFAULT_ARTIFACTORY);
     }
     
 }

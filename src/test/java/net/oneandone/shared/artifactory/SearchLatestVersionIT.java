@@ -17,10 +17,10 @@ package net.oneandone.shared.artifactory;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *

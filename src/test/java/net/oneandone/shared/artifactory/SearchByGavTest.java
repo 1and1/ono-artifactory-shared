@@ -15,9 +15,6 @@
  */
 package net.oneandone.shared.artifactory;
 
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.util.List;
 import net.oneandone.shared.artifactory.model.ArtifactoryResults;
 import net.oneandone.shared.artifactory.model.ArtifactoryStorage;
 import net.oneandone.shared.artifactory.model.Gav;
@@ -25,7 +22,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 /**
@@ -55,7 +57,7 @@ public class SearchByGavTest {
         }
         when(mockClient.execute(any(HttpGet.class), any(ResponseHandler.class))).thenReturn(staticResults);
         List<ArtifactoryStorage> result = sut.search(repositoryName, gav);
-        assertEquals(4, result.size());
+        assertThat(result).hasSize(4);
     }
 
     /**
@@ -65,6 +67,6 @@ public class SearchByGavTest {
     public void testBuildSearchURI() {
         URI expResult = URI.create("http://localhost/api/search/gavc?repos=repo1&g=junit&a=junit&v=4.11");
         URI result = sut.buildSearchURI(repositoryName, gav);
-        assertEquals(expResult, result);
+        assertThat(result).isEqualTo(expResult);
     }
 }

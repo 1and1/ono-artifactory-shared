@@ -15,9 +15,10 @@
  */
 package net.oneandone.shared.artifactory.model;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  *
@@ -44,7 +45,7 @@ public class Sha1Test {
     public void checkSha1() {
         final String givenSha1String = "d70e4ec32cf9ee8124ceec983147efc361153180";
         final Sha1 sha1 = Sha1.valueOf(givenSha1String);
-        assertEquals(givenSha1String, String.valueOf(sha1));
+        assertThat(String.valueOf(sha1)).isEqualTo(givenSha1String);
     }
 
     @Test
@@ -53,7 +54,7 @@ public class Sha1Test {
         final Sha1 sha1a = Sha1.valueOf(givenSha1String);
         final Sha1 sha1b = Sha1.valueOf(givenSha1String);
         final Sha1 sha1c = Sha1.valueOf("d70e4ec32cf9ee8124ceec983147efc361153181");
-        assertEquals(sha1a, sha1b);
+        assertThat(sha1b).isEqualTo(sha1a);
         assertNotEquals(sha1a, sha1c);
         assertNotEquals(sha1a, "bar");
         assertNotEquals(sha1a, null);

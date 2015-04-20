@@ -15,14 +15,15 @@
  */
 package net.oneandone.shared.artifactory;
 
-import net.oneandone.shared.artifactory.Sha1FilterOutputStream;
 import com.google.common.base.Charsets;
 import com.google.common.io.ByteStreams;
 import net.oneandone.shared.artifactory.model.Sha1;
+import org.junit.Test;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -47,7 +48,7 @@ public class Sha1FilterOutputStreamTest {
         }
         final String outputString = out.toString("utf-8");
         final Sha1 expectedSha1 = Sha1.valueOf("1f8782aaed6492b40ac2fc2584bca557d9fd3c11");
-        assertEquals(expectedSha1, sut.getSha1());
-        assertEquals(inputString + "A", outputString);
+        assertThat(sut.getSha1()).isEqualTo(expectedSha1);
+        assertThat(outputString).isEqualTo(inputString + "A");
     }
 }

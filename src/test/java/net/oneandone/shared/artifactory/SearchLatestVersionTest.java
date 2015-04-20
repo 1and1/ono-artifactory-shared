@@ -15,18 +15,20 @@
  */
 package net.oneandone.shared.artifactory;
 
-import java.io.IOException;
-import java.net.URI;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.BasicResponseHandler;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import java.io.IOException;
+import java.net.URI;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.*;
 
 /**
@@ -50,7 +52,7 @@ public class SearchLatestVersionTest {
         setupValidSearch();
         String expResult = "1.1.1";
         String result = sut.search("repo1", "commons-logging", "commons-logging");
-        assertEquals(expResult, result);
+        assertThat(result).isEqualTo(expResult);
     }
 
     /**
@@ -96,7 +98,7 @@ public class SearchLatestVersionTest {
     public void testBuildSearchUri() {
         URI expResult = URI.create("http://localhost:8081/artifactory/api/search/latestVersion?repos=repo1&g=commons-logging&a=commons-logging");
         URI result = sut.buildSearchUri("repo1", "commons-logging", "commons-logging");
-        assertEquals(expResult, result);
+        assertThat(result).isEqualTo(expResult);
     }
 
     void setupValidSearch() throws IOException {

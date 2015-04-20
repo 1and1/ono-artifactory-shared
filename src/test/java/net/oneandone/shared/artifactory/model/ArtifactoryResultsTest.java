@@ -15,12 +15,14 @@
  */
 package net.oneandone.shared.artifactory.model;
 
+import net.oneandone.shared.artifactory.Utils;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-import net.oneandone.shared.artifactory.Utils;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -39,10 +41,10 @@ public class ArtifactoryResultsTest {
         } finally {
             reader.close();
         }
-        assertEquals(4, results.size());
+        assertThat(results).hasSize(4);
         final ArtifactoryStorage pomInfo = results.get(0);
-        assertEquals("anonymous", pomInfo.createdBy);
-        assertEquals(Sha1.valueOf("cddf7490ffe839978cf5d6c944c01f2a8cb70a49"), pomInfo.checksums.sha1);
+        assertThat(pomInfo.createdBy).isEqualTo("anonymous");
+        assertThat(pomInfo.checksums.sha1).isEqualTo(Sha1.valueOf("cddf7490ffe839978cf5d6c944c01f2a8cb70a49"));
     }
     
 }

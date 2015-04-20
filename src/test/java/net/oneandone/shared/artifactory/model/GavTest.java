@@ -16,6 +16,7 @@
 package net.oneandone.shared.artifactory.model;
 
 import org.junit.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

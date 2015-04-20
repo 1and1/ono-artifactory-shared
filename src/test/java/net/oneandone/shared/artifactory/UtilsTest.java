@@ -16,12 +16,15 @@
 package net.oneandone.shared.artifactory;
 
 import com.google.gson.Gson;
-import java.net.URI;
-import java.net.URISyntaxException;
 import org.apache.http.client.utils.URIBuilder;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  *
@@ -38,7 +41,7 @@ public class UtilsTest {
         URIBuilder uriBuilder = new URIBuilder(expResult);
         String errorMessage = "oops";
         URI result = Utils.toUri(uriBuilder, errorMessage);
-        assertEquals(expResult, result);
+        assertThat(result).isEqualTo(expResult);
     }
 
     /**
@@ -57,6 +60,6 @@ public class UtilsTest {
     @Test
     public void testCreateGson() {
         Gson result = Utils.createGson();
-        assertNotNull(result);
+        assertThat(result).isNotNull();
     }
 }

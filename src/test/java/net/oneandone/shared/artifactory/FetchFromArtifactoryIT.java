@@ -19,13 +19,14 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import net.oneandone.shared.artifactory.model.ArtifactoryStorage;
 import net.oneandone.shared.artifactory.model.Sha1;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import static org.junit.Assert.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 /**
  *

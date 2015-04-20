@@ -15,10 +15,12 @@
  */
 package net.oneandone.shared.artifactory.model;
 
+import org.junit.Test;
+
 import java.io.InputStream;
 import java.util.List;
-import static org.junit.Assert.*;
-import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
@@ -29,15 +31,15 @@ public class BomEntryTest {
     @Test
     public void checkFirstSut() {
         final BomEntry sut = BomEntry.valueOf("d70e4ec32cf9ee8124ceec983147efc361153180" + "  " + "bill-of-materials-maven-plugin-2.0-javadoc.jar");
-        assertEquals("d70e4ec32cf9ee8124ceec983147efc361153180", sut.getSha1().toString());
-        assertEquals("bill-of-materials-maven-plugin-2.0-javadoc.jar", sut.getFileName());
+        assertThat(sut.getSha1().toString()).isEqualTo("d70e4ec32cf9ee8124ceec983147efc361153180");
+        assertThat(sut.getFileName()).isEqualTo("bill-of-materials-maven-plugin-2.0-javadoc.jar");
     }
 
     @Test
     public void checkSecondSut() {
         BomEntry sut = BomEntry.valueOf("8067be47fffc2648048fee3baed8a071f1979db4  bill-of-materials-maven-plugin-2.0-sources.jar");
-        assertEquals("8067be47fffc2648048fee3baed8a071f1979db4", sut.getSha1().toString());
-        assertEquals("bill-of-materials-maven-plugin-2.0-sources.jar", sut.getFileName());
+        assertThat(sut.getSha1().toString()).isEqualTo("8067be47fffc2648048fee3baed8a071f1979db4");
+        assertThat(sut.getFileName()).isEqualTo("bill-of-materials-maven-plugin-2.0-sources.jar");
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -53,6 +55,6 @@ public class BomEntryTest {
         System.out.println("read");
         InputStream in = BomEntryTest.class.getResourceAsStream("/bill-of-materials.txt");
         List result = BomEntry.read(in);
-        assertEquals(5, result.size());
+        assertThat(result).hasSize(5);
     }
 }

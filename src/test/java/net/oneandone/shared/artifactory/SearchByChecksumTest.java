@@ -18,14 +18,16 @@ package net.oneandone.shared.artifactory;
 import net.oneandone.shared.artifactory.model.ArtifactoryChecksumResult;
 import net.oneandone.shared.artifactory.model.ArtifactoryChecksumResults;
 import net.oneandone.shared.artifactory.model.Sha1;
-import java.net.URI;
-import java.net.URL;
-import java.util.ArrayList;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import java.net.URI;
+import java.net.URL;
+import java.util.ArrayList;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -55,7 +57,7 @@ public class SearchByChecksumTest {
         checksumResults.results.add(checksumResult);
         when(mockedClient.execute(any(HttpGet.class), any(ResponseHandler.class))).thenReturn(checksumResults);
         URL search = sut.search("foo", Sha1.valueOf("d70e4ec32cf9ee8124ceec983147efc361153180"));
-        assertEquals(expected, search);   
+        assertThat(search).isEqualTo(expected);
     }
 
     /**
@@ -73,7 +75,7 @@ public class SearchByChecksumTest {
     @Test
     public void testBuildSearchURI() {
         URI buildSearchURI = sut.buildSearchURI("foo", Sha1.valueOf("d70e4ec32cf9ee8124ceec983147efc361153180"));
-        assertEquals("http://localhost/api/search/checksum?repos=foo&sha1=d70e4ec32cf9ee8124ceec983147efc361153180",
-                buildSearchURI.toString());
+        assertThat(buildSearchURI.toString()).isEqualTo(
+            "http://localhost/api/search/checksum?repos=foo&sha1=d70e4ec32cf9ee8124ceec983147efc361153180");
     }
 }
