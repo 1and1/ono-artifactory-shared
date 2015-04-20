@@ -16,7 +16,7 @@
 package net.oneandone.shared.artifactory.model;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Mirko Friedenhagen
@@ -29,9 +29,9 @@ public class GavTest {
      */
     @Test
     public void testGav() {
-        assertEquals("commons-logging", sut.getGroupId());
-        assertEquals("commons-logging", sut.getArtifactId());
-        assertEquals("1.1.1", sut.getVersion());
+        assertThat(sut.getGroupId()).isEqualTo("commons-logging");
+        assertThat(sut.getArtifactId()).isEqualTo("commons-logging");
+        assertThat(sut.getVersion()).isEqualTo( "1.1.1" );
     }
 
     /**
@@ -41,6 +41,11 @@ public class GavTest {
     public void testToString() {
         String expResult = "GAV(commons-logging, commons-logging, 1.1.1)";
         String result = sut.toString();
-        assertEquals(expResult, result);
-    }    
+        assertThat(result).isEqualTo( expResult );
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void illegalGAV() {
+        Gav.valueOf("commons-logging:commons-logging:1.1.1:DOES_NOT_MATTER");
+    }
 }
