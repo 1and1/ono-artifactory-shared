@@ -38,8 +38,8 @@
         <tag>HEAD</tag>
     </scm>
     <ciManagement>
-        <system>Jenkins</system>
-        <url>http://huschteguzzel.de/hudson/job/oneandone-ono-artifactory-shared/</url>
+        <system>Travis</system>
+        <url>https://travis-ci.org/1and1/ono-artifactory-shared</url>
     </ciManagement>
     <issueManagement>
         <system>GitHub</system>
