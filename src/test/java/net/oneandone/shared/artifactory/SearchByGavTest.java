@@ -23,6 +23,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.List;
@@ -46,18 +47,18 @@ public class SearchByGavTest {
      */
     @Test
     public void testSearch() throws Exception {
-        final String resourceName = "/junit-4.11-storage.json";
-        final InputStreamReader reader = new InputStreamReader(
-                SearchByGavTest.class.getResourceAsStream(resourceName));
-        ArtifactoryResults staticResults;
-        try {
-            staticResults = Utils.createGson().fromJson(reader, ArtifactoryResults.class);
-        } finally {
-            reader.close();
-        }
-        when(mockClient.execute(any(HttpGet.class), any(ResponseHandler.class))).thenReturn(staticResults);
+        createSearchResults("/junit-4.11-storage.json");
         List<ArtifactoryStorage> result = sut.search(repositoryName, gav);
         assertThat(result).hasSize(4);
+    }
+
+    /**
+     * Test of search method, of class SearchByGav.
+     */
+    @Test(expected = NotFoundException.class)
+    public void testEmptySearch() throws Exception {
+        createSearchResults("/empty-storage.json");
+        sut.search(repositoryName, gav);
     }
 
     /**
@@ -67,6 +68,19 @@ public class SearchByGavTest {
     public void testBuildSearchURI() {
         URI expResult = URI.create("http://localhost/api/search/gavc?repos=repo1&g=junit&a=junit&v=4.11");
         URI result = sut.buildSearchURI(repositoryName, gav);
-        assertThat(result).isEqualTo(expResult);
+        assertThat(result).isEqualTo( expResult );
     }
+
+    private void createSearchResults(String resourceName) throws IOException {
+        final InputStreamReader reader = new InputStreamReader(
+            SearchByGavTest.class.getResourceAsStream(resourceName));
+        ArtifactoryResults staticResults;
+        try {
+            staticResults = Utils.createGson().fromJson(reader, ArtifactoryResults.class);
+        } finally {
+            reader.close();
+        }
+        when(mockClient.execute(any(HttpGet.class), any(ResponseHandler.class))).thenReturn(staticResults);
+    }
+
 }
