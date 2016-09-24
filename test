@@ -1,0 +1,2 @@
+#!/bin/sh
+exec java -jar target/ono-artifactory-shared-1.0-SNAPSHOT-shaded.jar $* 'commons-logging:commons-logging:*'
