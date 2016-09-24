@@ -11,11 +11,11 @@ variables:
   except:
     - gh-pages
 
-test:jdk7:
+test:jdk7:3.3.9:
   <<: *test
   image: mfriedenhagen/docker-maven:3.3.9-jdk-7
 
-test:jdk8:
+test:jdk8:3.3.9:
   <<: *test
   image: mfriedenhagen/docker-maven:3.3.9-jdk-8
   artifacts:
@@ -36,7 +36,7 @@ pages:
   script:
     - mv target/staging/ono-artifactory-shared/ public
   dependencies:
-    - test:jdk8
+    - test:jdk8:3.3.9
   artifacts:
     paths:
     - public
