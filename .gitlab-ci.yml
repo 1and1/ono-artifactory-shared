@@ -7,7 +7,7 @@ variables:
 .test: &test
   stage: test
   script:
-    - mvn -B -V -e verify site site:stage
+    - mvn -B -V -e -P foss-parent-verification verify site site:stage
     - mv target/staging/${CI_PROJECT_NAME}/ target/staging/site
   except:
     - gh-pages
