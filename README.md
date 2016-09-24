@@ -1,4 +1,5 @@
 ono-artifactory-shared
 ======================
 
-Latest Jenkins-Build: [![Build Status](http://huschteguzzel.de/hudson/job/oneandone-ono-artifactory-shared/badge/icon)](http://huschteguzzel.de/hudson/job/oneandone-ono-artifactory-shared/)
+[![Build Status](https://travis-ci.org/1and1/ono-artifactory-shared.svg?branch=master)](https://travis-ci.org/1and1/ono-artifactory-shared)
+[![build status](https://gitlab.com/mfriedenhagen/ono-artifactory-shared/badges/master/build.svg)](https://gitlab.com/mfriedenhagen/ono-artifactory-shared/commits/master)
