@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class ArtifactoryModule extends AbstractModule {
 
     private final static Logger LOG = LoggerFactory.getLogger(ArtifactoryModule.class);
-    private static final String DEFAULT_ARTIFACTORY = "http://repo.jenkins-ci.org/";
+    private static final String DEFAULT_ARTIFACTORY = "https://repo.jfrog.org/artifactory/";
 
     private final String artifactoryUrl;
 
