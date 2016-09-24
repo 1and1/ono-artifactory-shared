@@ -20,6 +20,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <scmpublish.content>target/staging/ono-artifactory-shared</scmpublish.content>
+        <!-- needed for Maven 3.4.0-SNAPSHOT -->
+        <findbugs-maven-plugin.version>3.0.4</findbugs-maven-plugin.version>
         <findbugs-maven-plugin.excludeFilterFile>src/conf/findbugs-exclude.xml</findbugs-maven-plugin.excludeFilterFile>
         <maven-checkstyle-plugin.suppressionsLocation>src/conf/checkstyle-suppressions.xml</maven-checkstyle-plugin.suppressionsLocation>
         <!-- define coverage ratios used during jacoco-maven-plugin:check -->
